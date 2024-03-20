@@ -11,7 +11,7 @@ process.env.NODE_ENV =
   argv("production") === true ? "production" : "development";
 
 const files = glob
-  .sync(`${entryFolder}/*.{${fileExtensions}}`)
+  .sync(`${entryFolder}/main.{${fileExtensions}}`)
   .map((entry) => path.basename(entry))
   .filter((name) => !name.startsWith("_"));
 
@@ -22,10 +22,11 @@ files.forEach((file) => {
     outdir: outputFolder,
     sourcemap: true,
     bundle: true,
-    minify: true,
+    //minify: true,
     platform: "browser",
     logLevel: "info",
     legalComments: "linked",
+    target: "es2017",
   });
 });
 

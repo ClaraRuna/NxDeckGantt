@@ -14,8 +14,8 @@ export default () => ({
     },
     openNextcloudLogin() {
         window.open(window.nextcloudLoginData.login, "_blank");
-        console.log("window.nextcloudLoginData.poll.endpoint: " + window.nextcloudLoginData.poll.endpoint)
-        console.log("window.nextcloudLoginData.poll.token: " + window.nextcloudLoginData.poll.token)
+        let endpoint = window.nextcloudLoginData.poll.endpoint;
+        let token = window.nextcloudLoginData.poll.token;
         let res = pollNextcloudLoginEndpoint(window.nextcloudLoginData.poll.endpoint, window.nextcloudLoginData.poll.token)
             .then(function () {
                 console.log(res)// Polling done, now do something else!
@@ -26,38 +26,28 @@ export default () => ({
     }
 })
 
-function pollNextcloudLoginEndpoint(endpoint, token, timeout = 10000, interval = 500) {
-    var endTime = Number(new Date()) + timeout;
+async function pollNextcloudLoginEndpoint(endpointUrl, token, interval = 1000) {
+    return new Promise((resolve, reject) => {
+        const poll = async () => {
+            try {
+                const response = await fetch(endpointUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: "token=" + token
+                }); if (response.status === 200) {
+                    resolve(response);
+                } else if (response.status === 404) {
+                    setTimeout(poll, interval);
+                } else {
+                    reject(new Error(`Unexpected response status: ${response.status}`));
+                }
+            } catch (error) {
+                reject(error);
+            }
+        };
 
-    var checkCondition = function (resolve, reject) {
-        var result = postToNextcloudLoginEndpoint(endpoint, token);
-        if (result) {
-            resolve(result);
-        }
-        else if (Number(new Date()) < endTime) {
-            setTimeout(checkCondition, interval, resolve, reject);
-        }
-        else {
-            reject(new Error('timed out for ' + postToNextcloudLoginEndpoint + ': ' + arguments));
-        }
-    };
-
-    return new Promise(checkCondition);
-}
-
-function postToNextcloudLoginEndpoint(endpoint, token) {
-    const req = new XMLHttpRequest();
-    req.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            console.log("ready and 200")
-            return JSON.parse(req.response);
-        } else {
-            console.log("NC not rdy")
-        }
-    }
-    req.open("POST", endpoint);
-    req.setRequestHeader("token", token);
-    req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    let params = "token=" + token;
-    req.send(params);
+        poll();
+    });
 }

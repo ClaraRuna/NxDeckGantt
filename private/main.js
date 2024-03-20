@@ -1,24 +1,14 @@
 import Alpine from "alpinejs";
+import login from "./login";
+import init from "./init";
+
+Alpine.data("login", login);
+Alpine.data("init", init);
 
 window.Alpine = Alpine;
 Alpine.start();
 
 const NC_URL = "https://nextcloud.clarusch.de";
-
-window.onload = function () {
-  init();
-};
-
-function init() {
-  //check session cookie + username#
-  let sessionToken = getSessionToken();
-  if (sessionToken) {
-    document.getElementById("Login").classList.add("hidden");
-  } else {
-    document.getElementById("LogoutButton").classList.add("hidden");
-  }
-  window.alert("ladida");
-}
 
 function setCookie(cname, cvalue, exdays) {
   const d = new Date();

@@ -14,18 +14,19 @@ export default () => ({
     },
     openNextcloudLogin() {
         window.open(window.nextcloudLoginData.login, "_blank");
+        console.log("window.nextcloudLoginData.poll.endpoint: " + window.nextcloudLoginData.poll.endpoint)
+        console.log("window.nextcloudLoginData.poll.token: " + window.nextcloudLoginData.poll.token)
         let res = pollNextcloudLoginEndpoint(window.nextcloudLoginData.poll.endpoint, window.nextcloudLoginData.poll.token)
             .then(function () {
                 console.log(res)// Polling done, now do something else!
                 console.log("sucess?")
             }).catch(function () {
-                console.log("i don't know")
-                // Polling timed out, handle the error!
+                console.log("pollNextcloudLoginEndpoint did not succeed")
             });
     }
 })
 
-function pollNextcloudLoginEndpoint(endpoint, token, timeout = 10000, interval = 100) {
+function pollNextcloudLoginEndpoint(endpoint, token, timeout = 10000, interval = 500) {
     var endTime = Number(new Date()) + timeout;
 
     var checkCondition = function (resolve, reject) {
@@ -56,6 +57,7 @@ function postToNextcloudLoginEndpoint(endpoint, token) {
     }
     req.open("POST", endpoint);
     req.setRequestHeader("token", token);
+    req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     let params = "token=" + token;
     req.send(params);
 }

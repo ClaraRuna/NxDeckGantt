@@ -3,3 +3,5 @@ node_modules
 public/Scripts/main.js
 public/Scripts/main.js.map
 public/Styles/main.css
+public/Scripts/login.js
+public/Scripts/main.js

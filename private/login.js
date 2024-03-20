@@ -24,6 +24,17 @@ export default () => ({
       username + ":" + unescape(encodeURIComponent(password))
     );
   },
+  loginToNextcloud() {
+    const req = new XMLHttpRequest();
+    req.onreadystatechange = function (){
+        if (this.readyState == 4 && this.status == 200){
+            console.log(req);
+        }
+    }
+    req.open("GET", NC_URL + "/index.php/login/flow");
+    req.setRequestHeader("OCS-APIREQUEST", true);
+    req.send();
+  }
 });
 
 function getNextcloudLoginData(endpoint, token) {
@@ -56,3 +67,11 @@ function pollNextcloudLoginEndpoint(
   };
   return new Promise(response);
 }
+
+function loginToNextcloud() {
+    const req = new XMLHttpRequest();
+    req.addEventListener("load", reqListener);
+    req.setRequestHeader("OCS-APIREQUEST", true);
+    req.open("GET", NC_URL + "/index.php/login/flow");
+    req.send();
+  }

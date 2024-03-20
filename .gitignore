@@ -1,2 +1,5 @@
 node_modules
 .idea
+public/Scripts/main.js
+public/Scripts/main.js.map
+public/Styles/main.css

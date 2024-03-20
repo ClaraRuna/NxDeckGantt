@@ -15,6 +15,11 @@ RewriteCond %{REQUEST_METHOD} OPTIONS
 RewriteRule ^(.*)$ $1 [R=200,L]
 ```
 
+# Security 
+
+The App Password and Login will be stored in your Browser. Therefore you should either create a separate user for the app or deny the app file system permissions via User->Settings->Security->Sessions. Find the App and uncheck "allow file system access" in the menu behind the 3 dots.
+
+
 # deckGantt
 
 Simple web interface using FrappeGantt to show Nextcloud Deck Board cards in gantt format

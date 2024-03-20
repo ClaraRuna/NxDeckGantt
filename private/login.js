@@ -17,12 +17,18 @@ export default () => ({
         let endpoint = window.nextcloudLoginData.poll.endpoint;
         let token = window.nextcloudLoginData.poll.token;
         let res = pollNextcloudLoginEndpoint(window.nextcloudLoginData.poll.endpoint, window.nextcloudLoginData.poll.token)
-            .then(function () {
-                console.log(res)// Polling done, now do something else!
-                console.log("sucess?")
-            }).catch(function () {
-                console.log("pollNextcloudLoginEndpoint did not succeed")
+            .then(response => {
+                storeCredentials(response.loginName, response.appPassword);
+            }).catch(error => {
+                console.log("pollNextcloudLoginEndpoint did not succeed: " + error)
             });
+    }, saveCookieAndReload() {
+        let credentials = btoa(document.getElementById("username").value + ":" + document.getElementById("password").value)
+        document.cookie = "ncAuth=" + credentials + ";SameSite=Strict";
+        window.location.reload();
+    }, logout() {
+        document.cookie = "ncAuth=; expires=Thu, 01 Jan 1970 00:00:00 UTC;"
+        window.location.reload();
     }
 })
 
@@ -37,7 +43,9 @@ async function pollNextcloudLoginEndpoint(endpointUrl, token, interval = 1000) {
                     },
                     body: "token=" + token
                 }); if (response.status === 200) {
-                    resolve(response);
+                    const jsonResponse = await response.json();
+                    resolve(jsonResponse); // Resolve with the parsed JSON
+                    //resolve(response);
                 } else if (response.status === 404) {
                     setTimeout(poll, interval);
                 } else {
@@ -51,3 +59,11 @@ async function pollNextcloudLoginEndpoint(endpointUrl, token, interval = 1000) {
         poll();
     });
 }
+
+function storeCredentials(loginName, password) {
+    // Todo move to nice alert window in the dom
+    window.alert("A new client has been added. Please save the credentials: \n name: " + loginName + " \n password: " + password)
+    document.getElementById("username").value = loginName;
+    document.getElementById("password").value = password;
+}
+

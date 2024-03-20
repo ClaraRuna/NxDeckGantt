@@ -23,6 +23,8 @@
             id="LogoutButton"
             href="#"
             class="bg-white-50 block rounded-lg border bg-gray-50 px-3 py-1.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100 active:shadow-inner"
+            x-data="login"
+            @click="logout"
             >Log out</a
           >
         </div>
@@ -37,7 +39,7 @@
         <p class="pb-10">
           Please log in to give this app access to your Nextcloud Account.
         </p>
-        <div>
+        <form x-data="login" @submit.prevent="saveCookieAndReload">
           <input
             id="username"
             type="username"
@@ -48,21 +50,20 @@
             type="password"
             class="mx-auto mb-4 inline rounded-lg border bg-white px-3 py-1.5 text-base text-gray-900 hover:cursor-text hover:bg-gray-50 active:shadow-inner"
           />
-          <div
+          <button
             class="bg-white-50 mx-auto mb-12 block rounded-lg border bg-gray-50 px-3 py-1.5 text-center text-base font-semibold leading-7 text-gray-900 hover:cursor-pointer hover:bg-gray-100 active:shadow-inner"
-            x-data="login"
-            @click="storeCredentialsAsCookie"
+            type="submit"
           >
             Log in with existing client account
-          </div>
-        </div>
+        </button>
+        </form>
         <div
           class="bg-white-50 mx-auto mb-10 block rounded-lg border bg-gray-50 px-3 py-1.5 text-center text-base font-semibold leading-7 text-gray-900 hover:cursor-pointer hover:bg-gray-100 active:shadow-inner"
           x-data="login"
           x-init="initNextcloudLogin"
           @click="openNextcloudLogin"
         >
-          [ToDo]Create new client account
+          Create new client account
         </div>
         <div class="text-xs">Add Accordion with Additional Information</div>
       </div>

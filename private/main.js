@@ -10,6 +10,4 @@ Alpine.start();
 
 const NC_URL = "https://nextcloud.clarusch.de";
 
-document.addEventListener("alpine:init", () => {
-
-});
+document.addEventListener("alpine:init", () => {});

@@ -22,7 +22,7 @@
           <a
             id="LogoutButton"
             href="#"
-            class="bg-white-50 block rounded-lg border bg-gray-50 px-3 py-1.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100 active:shadow-inner"
+            class="bg-white-50 block rounded-lg border hidden bg-gray-50 px-3 py-1.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100 active:shadow-inner"
             x-data="login"
             @click="logout"
             >Log out</a
@@ -33,16 +33,17 @@
 
     <div
       id="Login"
-      class="absolute top-0 flex h-full w-full items-center justify-center"
+      class="absolute top-0 flex h-full w-full items-center justify-center hidden"
     >
       <div class="rounded-lg border p-10 shadow">
         <p class="pb-10">
           Please log in to give this app access to your Nextcloud Account.
         </p>
         <form x-data="login" @submit.prevent="saveCookieAndReload">
+          todo add label and placeholder
           <input
             id="username"
-            type="username"
+            type="text"
             class="mx-auto mb-4 inline rounded-lg border bg-white px-3 py-1.5 text-base text-gray-900 hover:cursor-text hover:bg-gray-50 active:shadow-inner"
           />
           <input
@@ -68,7 +69,7 @@
         <div class="text-xs">Add Accordion with Additional Information</div>
       </div>
     </div>
-    <div class="fixed h-full">
+    <div id="DeckSelection" class="fixed h-full" x-data="deckSelection">
       <div
         id="DeckNav"
         class="relative z-10 inline-block hidden h-full bg-white md:min-w-80"
@@ -89,10 +90,21 @@
         </nav>
       </div>
       <div
-        id="DeckTab"
-        class="relative left-0 top-20 z-0 inline-block hidden -translate-x-1/3 rotate-90 rounded-t-lg border bg-gray-50 bg-white p-4 shadow-sm hover:cursor-pointer hover:bg-gray-100"
+        class="relative left-0 top-20 z-0 inline-block -translate-x-1/3 rotate-90 rounded-t-lg border bg-gray-50 bg-white p-4 shadow-sm hover:cursor-pointer hover:bg-gray-100"
+        @click="toggle"
       >
         <div class="">Your Decks</div>
+      </div>
+    </div>
+    <div id="MainContent" class="m-auto z-0 top-0 w-full justify-center">
+      <div class="m-auto">
+        <h1 class="text-center">Your unscheduled tasks</h1>
+        <div id="UnscheduledCards"></div>
+      </div>
+      <div >
+        <h1  class="text-center">Gantt chart</h1>
+      <div id="GanttChart">
+      </div>
       </div>
     </div>
   </body>

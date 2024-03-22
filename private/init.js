@@ -1,4 +1,5 @@
-import NC_URL from "./conf";
+import conf from "./conf";
+import {getAuthCookie} from "./auth";
 
 export default () => ({
   init() {
@@ -7,27 +8,10 @@ export default () => ({
     let authCookie = getAuthCookie();
     if (authCookie) {
       document.getElementById("Login").classList.add("hidden");
+      document.getElementById("DeckSelection").classList.remove("hidden");
+      document.getElementById("LogoutButton").classList.remove("hidden");
     } else {
-      document.getElementById("LogoutButton").classList.add("hidden");
+      document.getElementById("Login").classList.remove("hidden");
     }
   },
 });
-
-function getAuthCookie() {
-  return getCookie("ncAuth");
-}
-
-function getCookie(cname) {
-  let name = cname + "=";
-  let ca = document.cookie.split(";");
-  for (let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == " ") {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
-}

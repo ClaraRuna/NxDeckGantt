@@ -1,15 +1,15 @@
-import NC_URL from "./conf";
+import conf from "./conf";
 
 export default () => ({
   initNextcloudLogin() {
     const req = new XMLHttpRequest();
     req.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
+      if (this.readyState === 4 && this.status === 200) {
         console.log(req.response);
         window.nextcloudLoginData = JSON.parse(req.response);
       }
     };
-    req.open("POST", NC_URL + "/index.php/login/v2");
+    req.open("POST", conf.NC_URL + "/index.php/login/v2");
     req.send();
   },
   openNextcloudLogin() {
@@ -17,8 +17,8 @@ export default () => ({
     let endpoint = window.nextcloudLoginData.poll.endpoint;
     let token = window.nextcloudLoginData.poll.token;
     let res = pollNextcloudLoginEndpoint(
-      window.nextcloudLoginData.poll.endpoint,
-      window.nextcloudLoginData.poll.token
+      endpoint,
+      token
     )
       .then((response) => {
         storeCredentials(response.loginName, response.appPassword);
@@ -30,24 +30,21 @@ export default () => ({
   saveCookieAndReload() {
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
-    console.log("username: " + username);
-    console.log("password: " + password);
-    console.log(NC_URL + "/ocs/v1.php/...");
     let credentials = btoa(username + ":" + password);
-    const response = fetch(NC_URL + "/ocs/v1.php/...", {
+    fetch(conf.NC_URL + "/ocs/v1.php/...", {
       method: "GET",
       headers: {
         "OCS-APIREQUEST": "true",
         Authorization: "Basic " + credentials,
       },
     })
-      .then((response) => {
+      .then(() => {
         console.log("checkCredentials successful");
         document.cookie = "ncAuth=" + credentials + "; SameSite=Strict";
         window.location.reload();
       })
       .catch((error) => {
-        window.alert("wrong credentials");
+        window.alert("Could not log you in. Please check your credentials");
       });
   },
   logout() {

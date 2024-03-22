@@ -16,10 +16,7 @@ export default () => ({
     window.open(window.nextcloudLoginData.login, "_blank");
     let endpoint = window.nextcloudLoginData.poll.endpoint;
     let token = window.nextcloudLoginData.poll.token;
-    let res = pollNextcloudLoginEndpoint(
-      endpoint,
-      token
-    )
+    pollNextcloudLoginEndpoint(endpoint, token)
       .then((response) => {
         storeCredentials(response.loginName, response.appPassword);
       })
@@ -43,7 +40,7 @@ export default () => ({
         document.cookie = "ncAuth=" + credentials + "; SameSite=Strict";
         window.location.reload();
       })
-      .catch((error) => {
+      .catch(() => {
         window.alert("Could not log you in. Please check your credentials");
       });
   },

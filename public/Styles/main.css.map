@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../private/main.pcss"],"names":[],"mappings":"AAAA","file":"main.css","sourcesContent":["@import \"tailwindcss/base\";\n@import \"tailwindcss/components\";\n@import \"tailwindcss/utilities\";\n"]}

@@ -1,5 +1,5 @@
 import conf from "./conf";
-import {getAuthCookie} from "./auth";
+import { getAuthCookie } from "./auth";
 
 export default () => ({
   init() {

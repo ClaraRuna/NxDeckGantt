@@ -22,7 +22,7 @@
           <a
             id="LogoutButton"
             href="#"
-            class="bg-white-50 block rounded-lg border hidden bg-gray-50 px-3 py-1.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100 active:shadow-inner"
+            class="bg-white-50 block hidden rounded-lg border bg-gray-50 px-3 py-1.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100 active:shadow-inner"
             x-data="login"
             @click="logout"
             >Log out</a
@@ -33,7 +33,7 @@
 
     <div
       id="Login"
-      class="absolute top-0 flex h-full w-full items-center justify-center hidden"
+      class="absolute top-0 flex hidden h-full w-full items-center justify-center"
     >
       <div class="rounded-lg border p-10 shadow">
         <p class="pb-10">
@@ -69,23 +69,23 @@
         <div class="text-xs">Add Accordion with Additional Information</div>
       </div>
     </div>
-    <div id="DeckSelection" class="fixed h-full" x-data="deckSelection">
+    <div id="DeckSelection" class="fixed h-full" x-data="decks">
       <div
         id="DeckNav"
         class="relative z-10 inline-block hidden h-full bg-white md:min-w-80"
       >
         <nav class="h-full w-full shadow-sm">
-          <ul>
-            <li class="border-b-2 border-gray-50">
-              <a href="#" class="block w-full p-3 hover:bg-gray-100">
-                deck 1
-              </a>
-            </li>
-            <li class="border-b-2 border-gray-50">
-              <a href="#" class="block w-full p-3 hover:bg-gray-100">
-                deck 2
-              </a>
-            </li>
+          <ul x-data="$store.decks">
+            <template x-for="deck in decks">
+              <li class="border-b-2 border-gray-50" @click="openDeck(deck.id)">
+                <a
+                  x-text="deck.title"
+                  href="#"
+                  class="block w-full p-3 hover:bg-gray-100"
+                >
+                </a>
+              </li>
+            </template>
           </ul>
         </nav>
       </div>
@@ -96,15 +96,14 @@
         <div class="">Your Decks</div>
       </div>
     </div>
-    <div id="MainContent" class="m-auto z-0 top-0 w-full justify-center">
+    <div id="MainContent" class="top-0 z-0 m-auto w-full justify-center">
       <div class="m-auto">
         <h1 class="text-center">Your unscheduled tasks</h1>
         <div id="UnscheduledCards"></div>
       </div>
-      <div >
-        <h1  class="text-center">Gantt chart</h1>
-      <div id="GanttChart">
-      </div>
+      <div>
+        <h1 class="text-center">Gantt chart</h1>
+        <div id="GanttChart"></div>
       </div>
     </div>
   </body>

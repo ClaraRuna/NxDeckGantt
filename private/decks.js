@@ -1,6 +1,6 @@
 import conf from "./conf";
 import { getAuthCookie } from "./auth";
-
+import { createTasks } from "./tasks";
 
 export default () => ({
   toggle() {

@@ -43,7 +43,7 @@ Online demo version :
 
 https://deckgantt.jblopez.fr/
 
-Api url : your nextcloud deck api url like https://mynexcloud.xy/index.php/apps/deck/api/v1.0/boards
+Api url : your nextcloud deck api url like https://mynexcloud.xy/index.php/apps/deck/api/v1.1/boards
 
 Login : your login
 

@@ -1,3 +1,4 @@
+import Alpine from "alpinejs";
 import conf from "./conf";
 import { getAuthCookie } from "./auth";
 import { createTasks } from "./tasks";
@@ -7,7 +8,9 @@ export default () => ({
     document.getElementById("DeckNav").classList.toggle("hidden");
   },
   openDeck(id) {
-    loadDeck(id).then(createTasks);
+    Alpine.store("decks").currentDeck = loadDeck(id).then(createTasks);
+    console.log("Alpine.store(decks).currentDeck");
+    console.log(Alpine.store("decks").currentDeck);
   },
   //for each deck load html https://alpinejs.dev/essentials/templating#looping-elements
 });

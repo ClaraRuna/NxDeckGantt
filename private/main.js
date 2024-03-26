@@ -11,6 +11,7 @@ Alpine.store("decks", {
     this.decks = loadDecks();
   },
   decks: [],
+  currentDeck: []
 });
 
 window.Alpine = Alpine;

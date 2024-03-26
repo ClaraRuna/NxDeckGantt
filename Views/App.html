@@ -97,9 +97,20 @@
       </div>
     </div>
     <div id="MainContent" class="top-0 z-0 m-auto w-full justify-center">
-      <div class="m-auto">
+      <div class="m-auto" x-data="$store.decks">
         <h1 class="text-center">Your unscheduled tasks</h1>
-        <div id="UnscheduledCards"></div>
+        <div id="UnscheduledCards">
+          <template x-for="card in currentDeck">
+            <li class="border-b-2 border-gray-50">
+              <a
+                x-text="card.name"
+                href="#"
+                class="block w-full p-3 hover:bg-gray-100"
+                >test text
+              </a>
+            </li>
+          </template>
+        </div>
       </div>
       <div>
         <h1 class="text-center">Gantt chart</h1>

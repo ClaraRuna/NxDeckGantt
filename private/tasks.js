@@ -13,7 +13,6 @@ export function createTasks(stacks) {
           card.duedate
         );
         tasks.push(newTask);
-        console.log(newTask);
       }
     }
   }

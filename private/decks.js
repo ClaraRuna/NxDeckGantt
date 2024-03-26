@@ -1,4 +1,3 @@
-import Alpine from "alpinejs";
 import conf from "./conf";
 import { getAuthCookie } from "./auth";
 import { createTasks } from "./tasks";
@@ -6,11 +5,6 @@ import { createTasks } from "./tasks";
 export default () => ({
   toggle() {
     document.getElementById("DeckNav").classList.toggle("hidden");
-  },
-  openDeck(id) {
-    Alpine.store("decks").currentDeck = loadDeck(id).then(createTasks);
-    console.log("Alpine.store(decks).currentDeck");
-    console.log(Alpine.store("decks").currentDeck);
   },
   //for each deck load html https://alpinejs.dev/essentials/templating#looping-elements
 });
@@ -32,7 +26,7 @@ export async function loadDecks() {
   }
 }
 
-async function loadDeck(id) {
+export async function loadDeck(id) {
   let credentials = getAuthCookie();
   let url = conf.NC_URL + conf.BOARD_ENDPOINT + "/" + id + "/stacks";
 
@@ -43,7 +37,7 @@ async function loadDeck(id) {
     },
   });
   if (response.status === 200) {
-    return await response.json();
+    return createTasks(await response.json());
   } else {
     return new Error(`Unexpected response: ${response}`);
   }

@@ -102,7 +102,15 @@
                     <h1 class="text-center bg-gray-50" x-text="getCurrentDeckName"></h1>
                     <h2 class="text-center">Your unscheduled tasks</h2>
                     <div id="UnscheduledCards">
-                        <template x-for="card in getCurrentDeckCards">
+                        <template x-for="card in getUnscheduledTasks">
+                            <li class="border-b-2 border-gray-50">
+                                <a href="#" class="block w-full p-3 hover:bg-gray-100" x-text="card.name"
+                                >
+                                </a>
+                            </li>
+                        </template>
+                        ----
+                        <template x-for="card in getScheduledTasks">
                             <li class="border-b-2 border-gray-50">
                                 <a href="#" class="block w-full p-3 hover:bg-gray-100" x-text="card.name"
                                 >

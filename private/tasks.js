@@ -1,5 +1,4 @@
 export function createTasks(stacks) {
-  // put relevant task data into array that can then be attached to
   let tasks = [];
   for (let stack of stacks) {
     if (stack.cards) {
@@ -19,6 +18,14 @@ export function createTasks(stacks) {
   return tasks;
 }
 
+export function getScheduledTasks(tasks){
+  return tasks.filter(function(task) { return task.isScheduled()});
+}
+
+export function getUnscheduledTasks(tasks){
+  return tasks.filter(function(task) { return !task.isScheduled()});
+}
+
 class Task {
   constructor(id, name, stackId, description, order, dueDate) {
     this.id = id;
@@ -26,7 +33,7 @@ class Task {
     this.stackId = stackId;
     this.description = description;
     this.order = order;
-    this.setDueDate(dueDate);
+    this.dueDate = this.dueDate(dueDate);
     this.duration = this.getDurationFromDescription(description);
     this.class = this.getClassFromDescription(description);
     this.progress = this.getProgressFromDescription(description);
@@ -40,11 +47,12 @@ class Task {
     return this.dueDate - this.duration;
   }
 
-  setDueDate(date) {
+  // transform date to string
+  dueDate(date) {
     if (!date) {
-      this.dueDate = null;
+      return null;
     } else {
-      this.dueDate = new Date(date);
+      return new Date(date);
     }
   }
 
@@ -72,5 +80,12 @@ class Task {
       );
     }
     return null;
+  }
+
+  isScheduled(){
+    if(this.dueDate){
+      return true;
+    }
+    return false;
   }
 }

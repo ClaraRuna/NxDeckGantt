@@ -1,6 +1,6 @@
 import conf from "./conf";
 import { getAuthCookie } from "./auth";
-import { createTasks } from "./tasks";
+import { createTasks, getScheduledTasks, getUnscheduledTasks } from "./tasks";
 
 export default () => ({
   toggle() {
@@ -12,6 +12,7 @@ export default () => ({
   init() {
     this.decks = loadDecks();
     this.currentDeck = {};
+    this.currentDeck.cards = [];
   },
   openDeck(id, name) {
     console.log("openDeck");
@@ -30,10 +31,15 @@ export default () => ({
     return this.currentDeck.name;
   },
   getUnscheduledTasks(){
-
+    //let unscheduledTasks = getUnscheduledTasks(this.getCurrentDeckCards());
+    let unscheduledTasks = getUnscheduledTasks(this.currentDeck.cards);
+    console.log(unscheduledTasks);
+    return unscheduledTasks;
   },
   getScheduledTasks(){
-
+    let scheduledTasks = getScheduledTasks(this.currentDeck.cards);
+    console.log(scheduledTasks);
+    return scheduledTasks;
   },
   decks: [],
   currentDeck: {},

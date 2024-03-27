@@ -70,7 +70,7 @@
             </div>
         </div>
         <div x-data="$store.decks">
-            <div id="DeckSelection" class="fixed h-full">
+            <div id="DeckSelection" class="fixed h-full" @click.outside="close">
                 <div
                         id="DeckNav"
                         class="relative z-10 inline-block hidden h-full bg-white md:min-w-80"
@@ -78,7 +78,7 @@
                     <nav class="h-full w-full shadow-sm">
                         <ul>
                             <template x-for="deck in decks">
-                                <li class="border-b-2 border-gray-50" @click="openDeck(deck.id)">
+                                <li class="border-b-2 border-gray-50" @click="openDeck(deck.id, deck.title)">
                                     <a
                                             x-text="deck.title"
                                             href="#"
@@ -99,24 +99,20 @@
             </div>
             <div id="MainContent" class="top-0 z-0 m-auto w-full justify-center">
                 <div class="m-auto">
-                    <h1 class="text-center">Your unscheduled tasks</h1>
+                    <h1 class="text-center bg-gray-50" x-text="getCurrentDeckName"></h1>
+                    <h2 class="text-center">Your unscheduled tasks</h2>
                     <div id="UnscheduledCards">
-                        <template x-for="card in getCurrentDeck">
+                        <template x-for="card in getCurrentDeckCards">
                             <li class="border-b-2 border-gray-50">
-                                <a href="#" class="block w-full p-3 hover:bg-gray-100"
-                                >test text
+                                <a href="#" class="block w-full p-3 hover:bg-gray-100" x-text="card.name"
+                                >
                                 </a>
                             </li>
                         </template>
-                        <div class="justify-center">
-                            <button @click="getCurrentDeck">First Tab</button>
-                            <button @click="getCurrentDeck">Second Tab</button>
-                            <button @click="getCurrentDeck">Third Tab</button>
-                        </div>
                     </div>
                 </div>
                 <div>
-                    <h1 class="text-center">Gantt chart</h1>
+                    <h2 class="text-center">Gantt chart</h2>
                     <div id="GanttChart"></div>
                 </div>
             </div>

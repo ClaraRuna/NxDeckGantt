@@ -6,25 +6,37 @@ export default () => ({
   toggle() {
     document.getElementById("DeckNav").classList.toggle("hidden");
   },
+  close(){
+    document.getElementById("DeckNav").classList.add("hidden");
+  },
   init() {
     this.decks = loadDecks();
-    this.currentDeck = loadDeck(1);
+    this.currentDeck = {};
   },
-  openDeck(id) {
+  openDeck(id, name) {
     console.log("openDeck");
-    loadDeck(id).then((deck) => {
-      console.log(deck);
-      this.currentDeck = deck;
+    loadDeck(id).then((cards) => {
+      this.currentDeck.name = name;
+      this.currentDeck.cards = cards;
       console.log(this.currentDeck);
     });
   },
-  getCurrentDeck() {
+  getCurrentDeckCards() {
     console.log("getCurrentDeck");
     console.log(this.currentDeck);
-    return this.currentDeck;
+    return this.currentDeck.cards;
+  },
+  getCurrentDeckName(){
+    return this.currentDeck.name;
+  },
+  getUnscheduledTasks(){
+
+  },
+  getScheduledTasks(){
+
   },
   decks: [],
-  currentDeck: [],
+  currentDeck: {},
 });
 
 export async function loadDecks() {

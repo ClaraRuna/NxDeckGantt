@@ -1,6 +1,7 @@
 import conf from "./conf";
 import { getAuthCookie } from "./auth";
 import { createTasks, getScheduledTasks, getUnscheduledTasks } from "./tasks";
+import {createGantt} from "./gantt";
 
 export default () => ({
   toggle() {
@@ -20,6 +21,7 @@ export default () => ({
       this.currentDeck.name = name;
       this.currentDeck.cards = cards;
       console.log(this.currentDeck);
+      createGantt(this.currentDeck.cards);
     });
   },
   getCurrentDeckCards() {

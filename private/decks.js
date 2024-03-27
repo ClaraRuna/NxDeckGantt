@@ -6,7 +6,25 @@ export default () => ({
   toggle() {
     document.getElementById("DeckNav").classList.toggle("hidden");
   },
-  //for each deck load html https://alpinejs.dev/essentials/templating#looping-elements
+  init() {
+    this.decks = loadDecks();
+    this.currentDeck = loadDeck(1);
+  },
+  openDeck(id) {
+    console.log("openDeck");
+    loadDeck(id).then((deck) => {
+      console.log(deck);
+      this.currentDeck = deck;
+      console.log(this.currentDeck);
+    });
+  },
+  getCurrentDeck() {
+    console.log("getCurrentDeck");
+    console.log(this.currentDeck);
+    return this.currentDeck;
+  },
+  decks: [],
+  currentDeck: [],
 });
 
 export async function loadDecks() {

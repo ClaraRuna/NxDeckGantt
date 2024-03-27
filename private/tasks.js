@@ -19,7 +19,12 @@ export function createTasks(stacks) {
 }
 
 export function getScheduledTasks(tasks){
-  return tasks.filter(function(task) { return task.isScheduled()});
+  let filteredTasks = tasks.filter(function(task) { return task.isScheduled()});
+  filteredTasks.sort(function (a, b) {
+    return a.dueDate - b.dueDate;
+  })
+  console.log(filteredTasks);
+  return filteredTasks;
 }
 
 export function getUnscheduledTasks(tasks){
@@ -33,7 +38,7 @@ class Task {
     this.stackId = stackId;
     this.description = description;
     this.order = order;
-    this.dueDate = this.dueDate(dueDate);
+    this.dueDate = this.constructDueDate(dueDate);
     this.duration = this.getDurationFromDescription(description);
     this.class = this.getClassFromDescription(description);
     this.progress = this.getProgressFromDescription(description);
@@ -48,7 +53,7 @@ class Task {
   }
 
   // transform date to string
-  dueDate(date) {
+  constructDueDate(date) {
     if (!date) {
       return null;
     } else {

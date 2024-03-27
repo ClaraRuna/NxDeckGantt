@@ -104,7 +104,7 @@
                     <div id="UnscheduledCards">
                         <template x-for="card in getUnscheduledTasks">
                             <li class="border-b-2 border-gray-50">
-                                <a href="#" class="block w-full p-3 hover:bg-gray-100" x-text="card.name"
+                                <a href="#" class="block w-full p-3 hover:bg-gray-100" x-text="card.name + card.dueDate"
                                 >
                                 </a>
                             </li>

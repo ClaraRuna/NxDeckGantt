@@ -1,4 +1,4 @@
-var Gantt = (function () {
+export var Gantt = (function () {
   "use strict";
 
   const YEAR = "year";

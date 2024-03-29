@@ -1816,13 +1816,13 @@ export var Gantt = (function () {
 
     get_task(id) {
       return this.tasks.find((task) => {
-        return task.id === id;
+        return task.id == parseInt(id);
       });
     }
 
     get_bar(id) {
       return this.bars.find((bar) => {
-        return bar.task.id === id;
+        return bar.task.id == parseInt(id);
       });
     }
 

@@ -3,8 +3,6 @@ import { getAuthCookie } from "./auth";
 
 export default () => ({
   init() {
-    console.log("init called");
-    //check session cookie + username#
     let authCookie = getAuthCookie();
     if (authCookie) {
       document.getElementById("Login").classList.add("hidden");

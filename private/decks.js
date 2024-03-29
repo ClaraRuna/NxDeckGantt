@@ -1,13 +1,13 @@
 import conf from "./conf";
 import { getAuthCookie } from "./auth";
 import { createTasks, getScheduledTasks, getUnscheduledTasks } from "./tasks";
-import {createGantt} from "./gantt";
+import { createGantt } from "./gantt";
 
 export default () => ({
   toggle() {
     document.getElementById("DeckNav").classList.toggle("hidden");
   },
-  close(){
+  close() {
     document.getElementById("DeckNav").classList.add("hidden");
   },
   init() {
@@ -21,7 +21,7 @@ export default () => ({
       this.currentDeck.name = name;
       this.currentDeck.cards = cards;
       console.log(this.currentDeck);
-      createGantt(this.currentDeck.cards);
+      createGantt(this.getScheduledTasks());
     });
   },
   getCurrentDeckCards() {
@@ -29,16 +29,13 @@ export default () => ({
     console.log(this.currentDeck);
     return this.currentDeck.cards;
   },
-  getCurrentDeckName(){
+  getCurrentDeckName() {
     return this.currentDeck.name;
   },
-  getUnscheduledTasks(){
-    //let unscheduledTasks = getUnscheduledTasks(this.getCurrentDeckCards());
-    let unscheduledTasks = getUnscheduledTasks(this.currentDeck.cards);
-    console.log(unscheduledTasks);
-    return unscheduledTasks;
+  getUnscheduledTasks() {
+    return getUnscheduledTasks(this.currentDeck.cards);
   },
-  getScheduledTasks(){
+  getScheduledTasks() {
     let scheduledTasks = getScheduledTasks(this.currentDeck.cards);
     console.log(scheduledTasks);
     return scheduledTasks;

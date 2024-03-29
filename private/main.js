@@ -9,7 +9,7 @@ Alpine.data("init", init);
 window.Alpine = Alpine;
 
 document.addEventListener("alpine:init", () => {
-    Alpine.store("decks", decks);
+  Alpine.store("decks", decks);
 });
 
 Alpine.start();

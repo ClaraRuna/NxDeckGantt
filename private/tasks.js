@@ -9,6 +9,7 @@ export function createTasks(stacks) {
           card.stackId,
           card.description,
           card.order,
+          card.owner.uid,
           card.duedate
         );
         tasks.push(newTask);
@@ -18,26 +19,30 @@ export function createTasks(stacks) {
   return tasks;
 }
 
-export function getScheduledTasks(tasks){
-  let filteredTasks = tasks.filter(function(task) { return task.isScheduled()});
+export function getScheduledTasks(tasks) {
+  let filteredTasks = tasks.filter(function (task) {
+    return task.isScheduled();
+  });
   filteredTasks.sort(function (a, b) {
     return a.dueDate - b.dueDate;
-  })
-  console.log(filteredTasks);
+  });
   return filteredTasks;
 }
 
-export function getUnscheduledTasks(tasks){
-  return tasks.filter(function(task) { return !task.isScheduled()});
+export function getUnscheduledTasks(tasks) {
+  return tasks.filter(function (task) {
+    return !task.isScheduled();
+  });
 }
 
 class Task {
-  constructor(id, name, stackId, description, order, dueDate) {
+  constructor(id, name, stackId, description, order, owner, dueDate) {
     this.id = id;
     this.name = name;
     this.stackId = stackId;
     this.description = description;
     this.order = order;
+    this.owner = owner;
     this.dueDate = this.constructDueDate(dueDate);
     this.duration = this.getDurationFromDescription(description);
     this.class = this.getClassFromDescription(description);

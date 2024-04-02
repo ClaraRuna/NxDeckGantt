@@ -1,6 +1,9 @@
 import { Gantt } from "./frappe-gantt";
 
 export function createGantt(tasks) {
+/*  console.log("createGantt")
+  console.log(tasks)*/
+
   var gantt = new Gantt("#GanttChart", tasks, {
     header_height: 50,
     column_width: 30,

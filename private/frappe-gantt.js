@@ -193,7 +193,6 @@ export var Gantt = (function () {
     },
 
     start_of(date, scale) {
-      console.log(date);
       const scores = {
         [YEAR]: 6,
         [MONTH]: 5,
@@ -472,7 +471,6 @@ export var Gantt = (function () {
     }
 
     draw() {
-      console.log("draw");
       this.draw_bar();
       this.draw_progress_bar();
       this.draw_label();
@@ -788,7 +786,6 @@ export var Gantt = (function () {
 
     update_handle_position() {
       const bar = this.$bar;
-      console.log(this.handle_group);
       this.handle_group
         .querySelector(".handle.left")
         .setAttribute("x", bar.getX() + 1);
@@ -1051,6 +1048,8 @@ export var Gantt = (function () {
     setup_tasks(tasks) {
       // prepare tasks
       this.tasks = tasks.map((task, i) => {
+        /*console.log("setup tasks");
+        console.log(task)*/
         // convert to Date objects
         task._start = date_utils.parse(task.start);
         task._end = date_utils.parse(task.end);
@@ -1086,8 +1085,6 @@ export var Gantt = (function () {
         }
 
         // invalid flag
-        console.log(task._start);
-        console.log(task.end);
         if (!task.start || !task.end) {
           task.invalid = true;
         }
@@ -1513,7 +1510,6 @@ export var Gantt = (function () {
     }
 
     make_bars() {
-      console.log("makeBars");
       this.bars = this.tasks.map((task) => {
         const bar = new Bar(this, task);
         this.layers.bar.appendChild(bar.group);

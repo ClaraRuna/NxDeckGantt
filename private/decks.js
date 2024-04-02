@@ -16,17 +16,13 @@ export default () => ({
     this.currentDeck.cards = [];
   },
   openDeck(id, name) {
-    console.log("openDeck");
     loadDeck(id).then((cards) => {
       this.currentDeck.name = name;
       this.currentDeck.cards = cards;
-      console.log(this.currentDeck);
       createGantt(this.getScheduledTasks());
     });
   },
   getCurrentDeckCards() {
-    console.log("getCurrentDeck");
-    console.log(this.currentDeck);
     return this.currentDeck.cards;
   },
   getCurrentDeckName() {
@@ -37,7 +33,6 @@ export default () => ({
   },
   getScheduledTasks() {
     let scheduledTasks = getScheduledTasks(this.currentDeck.cards);
-    console.log(scheduledTasks);
     return scheduledTasks;
   },
   decks: [],

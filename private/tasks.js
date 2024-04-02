@@ -12,6 +12,11 @@ export function createTasks(stacks) {
           card.owner.uid,
           card.duedate
         );
+        //here the Dates are wrong
+        console.log("dueDate");
+        console.log(card.duedate);
+        console.log("newTask");
+        console.log(newTask);
         tasks.push(newTask);
       }
     }
@@ -49,15 +54,25 @@ class Task {
     this.class = this.getClassFromDescription(description);
     this.progress = this.getProgressFromDescription(description);
     this.dependencies = this.getDependenciesFromDescription(description);
+    console.log("this.end and this.start")
+    console.log(this.end) // this is ok
+    console.log(this.calculateStart())
+/*    console.log(this.start)
+    console.log("this.duration")
+    console.log(this.duration)*/
   }
 
   calculateStart() {
     if (!this.end) {
       return null;
     } else if (!this.duration) {
-      return new Date (this.end.getDate() - 1);
+      let startDate = new Date(this.end);
+      startDate.setDate(startDate.getDate() - 1);
+      return startDate;
     }
-    return new Date(this.end.getDate()- this.duration);
+    let startDate = new Date(this.end);
+    startDate.setDate(startDate.getDate() - this.duration);
+    return startDate;
   }
 
   // transform date to string

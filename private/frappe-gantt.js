@@ -193,6 +193,7 @@ export var Gantt = (function () {
     },
 
     start_of(date, scale) {
+      console.log(date);
       const scores = {
         [YEAR]: 6,
         [MONTH]: 5,
@@ -471,6 +472,7 @@ export var Gantt = (function () {
     }
 
     draw() {
+      console.log("draw");
       this.draw_bar();
       this.draw_progress_bar();
       this.draw_label();
@@ -525,6 +527,7 @@ export var Gantt = (function () {
     }
 
     draw_resize_handles() {
+      //ToDo function always returns here
       if (this.invalid) return;
 
       const bar = this.$bar;
@@ -785,6 +788,7 @@ export var Gantt = (function () {
 
     update_handle_position() {
       const bar = this.$bar;
+      console.log(this.handle_group);
       this.handle_group
         .querySelector(".handle.left")
         .setAttribute("x", bar.getX() + 1);
@@ -1082,6 +1086,8 @@ export var Gantt = (function () {
         }
 
         // invalid flag
+        console.log(task._start);
+        console.log(task.end);
         if (!task.start || !task.end) {
           task.invalid = true;
         }
@@ -1641,13 +1647,12 @@ export var Gantt = (function () {
         if (!action_in_progress()) return;
         const dx = e.clientX - x_on_start;
         const dy = e.clientY - y_on_start;
-        /*const dx = e.offsetX - x_on_start;
-        const dy = e.offsetY - y_on_start;*/
         bars.forEach((bar) => {
           const $bar = bar.$bar;
           $bar.finaldx = this.get_snap_position(dx);
 
           if (is_resizing_left) {
+            //ToDo === might cause problems
             if (parent_bar_id === bar.task.id) {
               bar.update_bar_position({
                 x: $bar.ox + $bar.finaldx,
@@ -1659,6 +1664,7 @@ export var Gantt = (function () {
               });
             }
           } else if (is_resizing_right) {
+            //ToDo === might cause problems
             if (parent_bar_id === bar.task.id) {
               bar.update_bar_position({
                 width: $bar.owidth + $bar.finaldx,

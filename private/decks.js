@@ -19,6 +19,7 @@ export default () => ({
     loadDeck(id).then((cards) => {
       this.currentDeck.name = name;
       this.currentDeck.cards = cards;
+      this.currentDeck.id = id;
       createGantt(this.getScheduledTasks());
     });
   },
@@ -67,7 +68,7 @@ export async function loadDeck(id) {
     },
   });
   if (response.status === 200) {
-    return createTasks(await response.json());
+    return createTasks(await response.json(), id);
   } else {
     return new Error(`Unexpected response: ${response}`);
   }

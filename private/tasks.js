@@ -1,6 +1,9 @@
-export function createTasks(stacks) {
+import conf from "./conf";
+
+export function createTasks(stacks, deckId) {
   let tasks = [];
   for (let stack of stacks) {
+    console.log(stack)
     if (stack.cards) {
       for (let card of stack.cards) {
         let newTask = new Task(
@@ -10,7 +13,8 @@ export function createTasks(stacks) {
           card.description,
           card.order,
           card.owner.uid,
-          card.duedate
+          card.duedate,
+          deckId,
         );
         //here the Dates are wrong
         console.log("dueDate");
@@ -41,7 +45,7 @@ export function getUnscheduledTasks(tasks) {
 }
 
 class Task {
-  constructor(id, name, stackId, description, order, owner, dueDate) {
+  constructor(id, name, stackId, description, order, owner, dueDate, deckId) {
     this.id = id;
     this.name = name;
     this.stackId = stackId;
@@ -54,6 +58,7 @@ class Task {
     this.class = this.getClassFromDescription(description);
     this.progress = this.getProgressFromDescription(description);
     this.dependencies = this.getDependenciesFromDescription(description);
+    this.deckId = deckId;
   }
 
   calculateStart() {
@@ -67,6 +72,15 @@ class Task {
     let startDate = new Date(this.end);
     startDate.setDate(startDate.getDate() - this.duration);
     return startDate;
+  }
+
+  calculateDuration(){
+    if (!this.end) {
+      return null;
+    } else if (!this.start){
+      return 1;
+    }
+    return this.end.getDate() - this.start.getDate();
   }
 
   // transform date to string
@@ -104,22 +118,14 @@ class Task {
     return null;
   }
 
-  setDurationInDescription(task, newDurationInDays) {
-    /*    // To calculate the time difference of two dates
-    var durationInTime = end.getTime() - start.getTime();
-    // To calculate the nb of days between two dates
-    var durationInDays = Math.round(durationInTime / (1000 * 3600 * 24));
-
-    console.log(description.search(/d:(.*?):d/));
-    if (description.search(/d:(.*?):d/) != -1) {
-      description = description.replace(
-        /d:(.*?):d/,
-        "d:" + (durationInDays - 1) + ":d"
-      );
-    } else {
-      description = "d:" + (durationInDays - 1) + ":d\n" + description;
-    }*/
-    this.setInDescription(task, "d", 1);
+  setDueDateAndDuration(start, end){
+    let duration = end.getDate()-start.getDate();
+    this.setDurationInDescription(duration);
+    this.dueDate = end;
+    this.putToRemote();
+  }
+  setDurationInDescription(newDurationInDays) {
+    this.setInDescription("d", 1);
   }
 
   setClassInDescription(task, newClass) {
@@ -133,17 +139,16 @@ class Task {
   setDependencyInDescription(task, newDependency) {
     this.setInDescription(task, letter, value);
   }
-  setInDescription(task, letter, value) {
+  setInDescription(letter, value) {
     let regex = new RegExp(letter + ":(.*?):" + letter);
     let newExp = `${letter}:${value}:${letter}`;
-    let description = task.description;
+    let description = this.description;
     if (description.search(regex) !== -1) {
       description = description.replace(regex, newExp);
     } else {
       description = description + newExp;
     }
-    task.description = description;
-    this.pushToRemote(task);
+    this.description = description;
   }
 
   isScheduled() {
@@ -153,34 +158,22 @@ class Task {
     return false;
   }
 
-  pushToRemote(task) {}
-}
+  putToRemote() {
+    let requestData = {
+      "description": this.description,
+      "duedate": this.end,
+      "order": this.order,
+      "owner": this.owner,
+      "title": this.title,
+      "type": "plain"
+    }
 
-function udpateCard(task, start, end, progress = null) {
-  /*  if (progress) {
-    description = description.replace(/p:(.*?):p/, "p:" + progress + ":p");
+    fetch(conf.NC_URL + conf.BOARD_ENDPOINT + `/${this.deckId}/stacks/${this.stackId}/cards/${this.id}`,{
+      method: 'PUT',
+      headers:{
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify(requestData)
+    })
   }
-
-  let params = {
-    title: task.name,
-    description: description,
-    type: "plain",
-    order: 999,
-    duedate: end,
-    owner: "",
-  };
-
-  sendRequest(
-    "PUT",
-    apiUrl +
-      "/" +
-      task.board_id +
-      "/stacks/" +
-      task.stack_id +
-      "/cards/" +
-      task.card_id,
-    JSON.stringify(params),
-    false,
-    "cardUpdated"
-  );*/
 }

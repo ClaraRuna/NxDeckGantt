@@ -13,6 +13,11 @@ Add the following to the apache conf of your Nextcloud Server (e.g. <VirtualHost
 
 ```
 
+# ToDo
+- remove Cookie stuff
+- refactor duration to start date
+
+
 # Security
 
 The App Password and Login will be stored in your Browser. Therefore you should either create a separate user for the app or deny the app file system permissions via User->Settings->Security->Sessions. Find the App and uncheck "allow file system access" in the menu behind the 3 dots.

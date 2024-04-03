@@ -23,8 +23,7 @@ export function createGantt(tasks) {
       console.log(task);
     },
     on_date_change: function (task, start, end) {
-      console.log(task, start, end);
-      //udpateCard(task, start, end);
+      task.setDueDateAndDuration(start, end)
     },
     on_progress_change: function (task, progress) {
       console.log(task, task._start, task._end, progress);

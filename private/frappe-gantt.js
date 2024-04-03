@@ -1616,8 +1616,6 @@ export var Gantt = (function () {
 
         bar_wrapper.classList.add("active");
 
-        //x_on_start = e.offsetX;
-        //y_on_start = e.offsetY;
         x_on_start = e.clientX;
         y_on_start = e.clientY;
 
@@ -1646,10 +1644,8 @@ export var Gantt = (function () {
         bars.forEach((bar) => {
           const $bar = bar.$bar;
           $bar.finaldx = this.get_snap_position(dx);
-
           if (is_resizing_left) {
-            //ToDo === might cause problems
-            if (parent_bar_id === bar.task.id) {
+            if (parent_bar_id == bar.task.id) {
               bar.update_bar_position({
                 x: $bar.ox + $bar.finaldx,
                 width: $bar.owidth - $bar.finaldx,
@@ -1660,8 +1656,7 @@ export var Gantt = (function () {
               });
             }
           } else if (is_resizing_right) {
-            //ToDo === might cause problems
-            if (parent_bar_id === bar.task.id) {
+            if (parent_bar_id == bar.task.id) {
               bar.update_bar_position({
                 width: $bar.owidth + $bar.finaldx,
               });
@@ -1707,8 +1702,6 @@ export var Gantt = (function () {
         is_resizing = true;
         x_on_start = e.clientX;
         y_on_start = e.clientY;
-        /*x_on_start = e.offsetX;
-        y_on_start = e.offsetY;*/
 
         const $bar_wrapper = $.closest(".bar-wrapper", handle);
         const id = $bar_wrapper.getAttribute("data-id");

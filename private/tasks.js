@@ -29,7 +29,7 @@ export function getScheduledTasks(tasks) {
     return task.isScheduled();
   });
   filteredTasks.sort(function (a, b) {
-    return a.end - b.end;
+    return a.start - b.start;
   });
   return filteredTasks;
 }
@@ -54,12 +54,6 @@ class Task {
     this.class = this.getClassFromDescription(description);
     this.progress = this.getProgressFromDescription(description);
     this.dependencies = this.getDependenciesFromDescription(description);
-    console.log("this.end and this.start")
-    console.log(this.end) // this is ok
-    console.log(this.calculateStart())
-/*    console.log(this.start)
-    console.log("this.duration")
-    console.log(this.duration)*/
   }
 
   calculateStart() {

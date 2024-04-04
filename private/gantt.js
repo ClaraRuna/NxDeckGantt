@@ -1,7 +1,7 @@
 import { Gantt } from "./frappe-gantt";
 
 export function createGantt(tasks) {
-/*  console.log("createGantt")
+  /*  console.log("createGantt")
   console.log(tasks)*/
 
   var gantt = new Gantt("#GanttChart", tasks, {
@@ -23,7 +23,7 @@ export function createGantt(tasks) {
       console.log(task);
     },
     on_date_change: function (task, start, end) {
-      task.setDueDateAndDuration(start, end)
+      task.setDueDateAndDuration(start, end);
     },
     on_progress_change: function (task, progress) {
       console.log(task, task._start, task._end, progress);

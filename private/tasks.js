@@ -3,7 +3,7 @@ import conf from "./conf";
 export function createTasks(stacks, deckId) {
   let tasks = [];
   for (let stack of stacks) {
-    console.log(stack)
+    console.log(stack);
     if (stack.cards) {
       for (let card of stack.cards) {
         let newTask = new Task(
@@ -14,7 +14,7 @@ export function createTasks(stacks, deckId) {
           card.order,
           card.owner.uid,
           card.duedate,
-          deckId,
+          deckId
         );
         //here the Dates are wrong
         console.log("dueDate");
@@ -74,10 +74,10 @@ class Task {
     return startDate;
   }
 
-  calculateDuration(){
+  calculateDuration() {
     if (!this.end) {
       return null;
-    } else if (!this.start){
+    } else if (!this.start) {
       return 1;
     }
     return this.end.getDate() - this.start.getDate();
@@ -118,8 +118,8 @@ class Task {
     return null;
   }
 
-  setDueDateAndDuration(start, end){
-    let duration = end.getDate()-start.getDate();
+  setDueDateAndDuration(start, end) {
+    let duration = end.getDate() - start.getDate();
     this.setDurationInDescription(duration);
     this.dueDate = end;
     this.putToRemote();
@@ -160,20 +160,25 @@ class Task {
 
   putToRemote() {
     let requestData = {
-      "description": this.description,
-      "duedate": this.end,
-      "order": this.order,
-      "owner": this.owner,
-      "title": this.title,
-      "type": "plain"
-    }
+      description: this.description,
+      duedate: this.end,
+      order: this.order,
+      owner: this.owner,
+      title: this.title,
+      type: "plain",
+    };
 
-    fetch(conf.NC_URL + conf.BOARD_ENDPOINT + `/${this.deckId}/stacks/${this.stackId}/cards/${this.id}`,{
-      method: 'PUT',
-      headers:{
-        'Content-Type':'application/json'
-      },
-      body: JSON.stringify(requestData)
-    })
+    fetch(
+      conf.NC_URL +
+        conf.BOARD_ENDPOINT +
+        `/${this.deckId}/stacks/${this.stackId}/cards/${this.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      }
+    );
   }
 }

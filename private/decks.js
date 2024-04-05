@@ -5,15 +5,29 @@ import { createGantt } from "./gantt";
 
 export default () => ({
   toggle() {
-    document.getElementById("DeckNav").classList.toggle("hidden");
+    let deckNav = document.getElementById("DeckNav");
+    let DeckSelection = document.getElementById("DeckSelection");
+    let width = deckNav.offsetWidth;
+    if (!DeckSelection.style.transform){
+      DeckSelection.style.transform = `translateX(-${width}px)`
+    } else {
+      DeckSelection.style.transform = ""
+    }
   },
   close() {
-    document.getElementById("DeckNav").classList.add("hidden");
+    let deckNav = document.getElementById("DeckNav");
+    let width = deckNav.offsetWidth;
+    let DeckSelection = document.getElementById("DeckSelection");
+    DeckSelection.style.transform = `translateX(-${width}px)`
+    console.log(DeckSelection)
   },
   init() {
     this.decks = loadDecks();
     this.currentDeck = {};
     this.currentDeck.cards = [];
+    let deckNav = document.getElementById("DeckNav");
+    let navTab = document.getElementById("NavTab");
+    navTab.style.left = deckNav.offsetWidth;
   },
   openDeck(id, name) {
     loadDeck(id).then((cards) => {
@@ -21,6 +35,7 @@ export default () => ({
       this.currentDeck.cards = cards;
       this.currentDeck.id = id;
       createGantt(this.getScheduledTasks());
+      this.close();
     });
   },
   getCurrentDeckCards() {

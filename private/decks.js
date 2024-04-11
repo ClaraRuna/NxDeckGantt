@@ -2,6 +2,7 @@ import conf from "./conf";
 import { createTasks, getScheduledTasks, getUnscheduledTasks } from "./tasks";
 import { createGantt } from "./gantt";
 import {getCredentials} from "./login";
+import {loggedInView, loggedOutView} from "./login";
 
 export default () => ({
   toggle() {
@@ -22,7 +23,14 @@ export default () => ({
     console.log(DeckSelection);
   },
   init() {
-    console.log("init");
+    loggedOutView();
+    try{
+      this.decks = loadDecks();
+      loggedInView();
+    }catch (error){
+      window.alert (error.message)
+      loggedOutView();
+    }
     this.decks = loadDecks();
     this.currentDeck = {};
     this.currentDeck.cards = [];
@@ -57,7 +65,6 @@ export default () => ({
 });
 
 export async function loadDecks() {
-  console.log("hä?");
   let credentials = getCredentials();
   let url = conf.NC_URL + conf.BOARD_ENDPOINT;
 

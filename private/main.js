@@ -1,9 +1,9 @@
 import Alpine from "alpinejs";
 import {getCredentials} from "./login";
-import init from "./init";
 import decks from "./decks";
+import login from "./login";
 
-Alpine.data("init", init);
+Alpine.data("login", login);
 
 window.Alpine = Alpine;
 

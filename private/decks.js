@@ -1,27 +1,28 @@
 import conf from "./conf";
-import { getAuthCookie } from "./auth";
 import { createTasks, getScheduledTasks, getUnscheduledTasks } from "./tasks";
 import { createGantt } from "./gantt";
+import {getCredentials} from "./login";
 
 export default () => ({
   toggle() {
     let deckNav = document.getElementById("DeckNav");
     let DeckSelection = document.getElementById("DeckSelection");
     let width = deckNav.offsetWidth;
-    if (!DeckSelection.style.transform){
-      DeckSelection.style.transform = `translateX(-${width}px)`
+    if (!DeckSelection.style.transform) {
+      DeckSelection.style.transform = `translateX(-${width}px)`;
     } else {
-      DeckSelection.style.transform = ""
+      DeckSelection.style.transform = "";
     }
   },
   close() {
     let deckNav = document.getElementById("DeckNav");
     let width = deckNav.offsetWidth;
     let DeckSelection = document.getElementById("DeckSelection");
-    DeckSelection.style.transform = `translateX(-${width}px)`
-    console.log(DeckSelection)
+    DeckSelection.style.transform = `translateX(-${width}px)`;
+    console.log(DeckSelection);
   },
   init() {
+    console.log("init");
     this.decks = loadDecks();
     this.currentDeck = {};
     this.currentDeck.cards = [];
@@ -56,7 +57,8 @@ export default () => ({
 });
 
 export async function loadDecks() {
-  let credentials = getAuthCookie();
+  console.log("hä?");
+  let credentials = getCredentials();
   let url = conf.NC_URL + conf.BOARD_ENDPOINT;
 
   let response = await fetch(url, {
@@ -73,7 +75,7 @@ export async function loadDecks() {
 }
 
 export async function loadDeck(id) {
-  let credentials = getAuthCookie();
+  let credentials = getCredentials();
   let url = conf.NC_URL + conf.BOARD_ENDPOINT + "/" + id + "/stacks";
 
   let response = await fetch(url, {

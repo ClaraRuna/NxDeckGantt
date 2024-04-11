@@ -1,10 +1,11 @@
 import conf from "./conf";
-import { getAuthCookie } from "./auth";
+import {getCredentials} from "./login";
 
 export default () => ({
   init() {
-    let authCookie = getAuthCookie();
-    if (authCookie) {
+    //todo
+    let auth = getCredentials();
+    if (auth) {
       document.getElementById("Login").classList.add("hidden");
       document.getElementById("DeckSelection").classList.remove("hidden");
       document.getElementById("LogoutButton").classList.remove("hidden");

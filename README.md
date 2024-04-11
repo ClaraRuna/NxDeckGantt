@@ -14,9 +14,9 @@ Add the following to the apache conf of your Nextcloud Server (e.g. <VirtualHost
 ```
 
 # ToDo
+
 - remove Cookie stuff
 - refactor duration to start date
-
 
 # Security
 

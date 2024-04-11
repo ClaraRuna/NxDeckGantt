@@ -40,7 +40,6 @@
           Please log in to give this app access to your Nextcloud Account.
         </p>
         <form x-data="login" @submit.prevent="saveCookieAndReload">
-          todo add label and placeholder
           <input
             id="username"
             type="text"
@@ -55,22 +54,13 @@
             class="bg-white-50 mx-auto mb-12 block rounded-lg border bg-gray-50 px-3 py-1.5 text-center text-base font-semibold leading-7 text-gray-900 hover:cursor-pointer hover:bg-gray-100 active:shadow-inner"
             type="submit"
           >
-            Log in with existing client account
+            Log in
           </button>
         </form>
-        <div
-          class="bg-white-50 mx-auto mb-10 block rounded-lg border bg-gray-50 px-3 py-1.5 text-center text-base font-semibold leading-7 text-gray-900 hover:cursor-pointer hover:bg-gray-100 active:shadow-inner"
-          x-data="login"
-          x-init="initNextcloudLogin"
-          @click="openNextcloudLogin"
-        >
-          Create new client account
-        </div>
-        <div class="text-xs">Add Accordion with Additional Information</div>
       </div>
     </div>
     <div x-data="$store.decks">
-      <div id="DeckSelection" class="fixed h-full z-10" @click.outside="close">
+      <div id="DeckSelection" class="fixed z-10 h-full" @click.outside="close">
         <div
           id="DeckNav"
           class="relative z-20 inline-block h-full bg-white md:min-w-80"

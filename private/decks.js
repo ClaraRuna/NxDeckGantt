@@ -1,14 +1,14 @@
 import conf from "./conf";
 import { createTasks, getScheduledTasks, getUnscheduledTasks } from "./tasks";
 import { createGantt } from "./gantt";
-import {getCredentials} from "./login";
-import {loggedInView, loggedOutView} from "./login";
+import { getCredentials } from "./login";
 
 export default () => ({
   toggle() {
     let deckNav = document.getElementById("DeckNav");
     let DeckSelection = document.getElementById("DeckSelection");
     let width = deckNav.offsetWidth;
+    console.log("width:" + width);
     if (!DeckSelection.style.transform) {
       DeckSelection.style.transform = `translateX(-${width}px)`;
     } else {
@@ -23,19 +23,20 @@ export default () => ({
     console.log(DeckSelection);
   },
   init() {
-    loggedOutView();
-    try{
+    loadingView();
+    try {
       this.decks = loadDecks();
-      loggedInView();
-    }catch (error){
-      window.alert (error.message)
+      this.decks.then(loggedInView);
+      this.decks.catch(loggedOutView);
+    } catch (error) {
+      window.alert(error.message);
       loggedOutView();
     }
-    this.decks = loadDecks();
     this.currentDeck = {};
     this.currentDeck.cards = [];
     let deckNav = document.getElementById("DeckNav");
     let navTab = document.getElementById("NavTab");
+    console.log("offsetWidth: " + deckNav.offsetWidth)
     navTab.style.left = deckNav.offsetWidth;
   },
   openDeck(id, name) {
@@ -96,4 +97,19 @@ export async function loadDeck(id) {
   } else {
     return new Error(`Unexpected response: ${response}`);
   }
+}
+
+function loadingView() {
+  document.getElementById("Login").classList.add("hidden");
+  document.getElementById("MainContent").classList.add("hidden");
+}
+function loggedInView() {
+  document.getElementById("Login").classList.add("hidden");
+  document.getElementById("MainContent").classList.remove("hidden");
+}
+
+function loggedOutView() {
+  console.log("render logged out view");
+  document.getElementById("Login").classList.remove("hidden");
+  document.getElementById("MainContent").classList.add("hidden");
 }

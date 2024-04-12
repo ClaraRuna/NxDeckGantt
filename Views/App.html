@@ -7,7 +7,7 @@
   <body class="min-h-screen">
     <header class="md-relative sticky top-0 z-30 bg-white shadow-sm">
       <div
-        class="mx-auto flex max-w-7xl items-center justify-between lg:px-8"
+        class="mx-auto flex min-h-12 max-w-7xl items-center justify-between lg:px-8"
         aria-label="Global"
       >
         <a href="#" class="-m-1.5 p-1.5">
@@ -50,7 +50,11 @@
       </div>
     </div>
     <div x-data="$store.decks">
-      <div id="DeckSelection" class="fixed z-10 h-full hidden" @click.outside="close">
+      <div
+        id="DeckSelection"
+        class="fixed z-10 h-full"
+        @click.outside="close"
+      >
         <div
           id="DeckNav"
           class="relative z-20 inline-block h-full bg-white md:min-w-80"
@@ -81,7 +85,10 @@
           <div class="">Decks</div>
         </div>
       </div>
-      <div id="MainContent" class="top-0 z-0 m-auto w-full justify-center hidden">
+      <div
+        id="MainContent"
+        class="top-0 z-0 m-auto hidden w-full justify-center"
+      >
         <div class="m-auto">
           <h1 class="bg-gray-50 text-center" x-text="getCurrentDeckName"></h1>
           <h2 class="text-center">Unscheduled tasks</h2>

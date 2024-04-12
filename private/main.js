@@ -1,5 +1,5 @@
 import Alpine from "alpinejs";
-import {getCredentials} from "./login";
+import { getCredentials } from "./login";
 import decks from "./decks";
 import login from "./login";
 

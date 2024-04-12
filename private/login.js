@@ -14,20 +14,6 @@ export function getCredentials() {
   return btoa(username + ":" + password);
 }
 
-export function loggedInView(){
-  document.getElementById("Login").classList.add("hidden");
-  document.getElementById("DeckSelection").classList.remove("hidden");
-  document.getElementById("MainContent").classList.remove("hidden");
-
-}
-
-export function loggedOutView(){
-  console.log("render logged out view")
-  document.getElementById("Login").classList.remove("hidden");
-  document.getElementById("DeckSelection").classList.add("hidden");
-  document.getElementById("MainContent").classList.add("hidden");
-}
-
 function storeCredentials(loginName, password) {
   // Todo move to nice alert window in the dom
   window.alert(

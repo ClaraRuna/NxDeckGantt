@@ -1,20 +1,6 @@
-# Allowing Nextcloud Auth Flow
-
-Add the following to the apache conf of your Nextcloud Server (e.g. <VirtualHost \*:443> section), replacing the Access-Controll-Allow-Origin header. This allows browsers to communicate with the app authentication endpoint
-
-```
-	<If "%{THE_REQUEST} =~ m#index\.php/login(/.*)?|ocs(/.*)?#">
-		Header always set Access-Control-Allow-Origin "<your-domain>"
-		Header always set Access-Control-Allow-Headers "Authorization , ocs-apirequest, userAgent, token, content-type"
-		Header always set Access-Control-Allow-Methods "GET"
-		Header always set Access-Control-Expose-Headers "Content-Security-Policy, Location"
-		Header always set Access-Control-Max-Age "600"
-	</If>
-
-```
-
 # ToDo
 
+- decks tab has inline style left:0px -> Problem!!
 - remove Cookie stuff
 - refactor duration to start date
 

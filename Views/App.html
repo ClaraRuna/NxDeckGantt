@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <title>App</title>
+  <link rel="stylesheet" href="../public/Styles/main.css" />
+  <script defer src="../public/Scripts/main.js"></script>
+
+  <body class="min-h-screen">
+    <header class="md-relative sticky top-0 z-30 bg-white shadow-sm">
+      <div
+        class="mx-auto flex min-h-12 max-w-7xl items-center justify-between lg:px-8"
+        aria-label="Global"
+      >
+        <a href="#" class="-m-1.5 p-1.5">
+          <span class="sr-only">Logo</span>
+          <img
+            class="h-8 w-auto"
+            src="https://www.wuerzburg.de/__/images/2017/logo.svg"
+            alt=""
+          />
+        </a>
+      </div>
+    </header>
+
+    <div
+      id="Login"
+      class="absolute top-0 flex hidden h-full w-full items-center justify-center"
+    >
+      <div class="rounded-lg border p-10 shadow">
+        <p class="pb-10">
+          Please log in to give this app access to your Nextcloud Account.
+        </p>
+        <form x-data="$store.decks" @submit.prevent="logIn">
+          <input
+            id="username"
+            type="text"
+            class="mx-auto mb-4 inline rounded-lg border bg-white px-3 py-1.5 text-base text-gray-900 hover:cursor-text hover:bg-gray-50 active:shadow-inner"
+          />
+          <input
+            id="password"
+            type="password"
+            class="mx-auto mb-4 inline rounded-lg border bg-white px-3 py-1.5 text-base text-gray-900 hover:cursor-text hover:bg-gray-50 active:shadow-inner"
+          />
+          <button
+            class="bg-white-50 mx-auto mb-12 block rounded-lg border bg-gray-50 px-3 py-1.5 text-center text-base font-semibold leading-7 text-gray-900 hover:cursor-pointer hover:bg-gray-100 active:shadow-inner"
+            type="submit"
+          >
+            Log in
+          </button>
+        </form>
+      </div>
+    </div>
+    <div x-data="$store.decks">
+      <div id="DeckSelection" class="fixed z-10 h-full" @click.outside="close">
+        <div
+          id="DeckNav"
+          class="relative z-20 inline-block h-full bg-white md:min-w-80"
+        >
+          <nav class="h-full w-full shadow-sm">
+            <ul>
+              <template x-for="deck in decks">
+                <li
+                  class="border-b-2 border-gray-50"
+                  @click="openDeck(deck.id, deck.title)"
+                >
+                  <a
+                    x-text="deck.title"
+                    href="#"
+                    class="block w-full p-3 hover:bg-gray-100"
+                  >
+                  </a>
+                </li>
+              </template>
+            </ul>
+          </nav>
+        </div>
+        <div
+          id="NavTab"
+          class="absolute top-20 z-10 inline-block -translate-x-1/3 rotate-90 rounded-t-lg border bg-gray-50 bg-white p-4 shadow-sm hover:cursor-pointer hover:bg-gray-100"
+          @click="toggle"
+        >
+          <div class="">Decks</div>
+        </div>
+      </div>
+      <div
+        id="MainContent"
+        class="top-0 z-0 m-auto hidden w-full justify-center"
+      >
+        <div class="m-auto">
+          <h1 class="bg-gray-50 text-center" x-text="getCurrentDeckName"></h1>
+          <h2 class="text-center">Unscheduled tasks</h2>
+          <div id="UnscheduledCards">
+            <template x-for="card in getUnscheduledTasks">
+              <li class="border-b-2 border-gray-50">
+                <a
+                  href="#"
+                  class="block w-full p-3 hover:bg-gray-100"
+                  x-text="card.name + card.end"
+                >
+                </a>
+              </li>
+            </template>
+          </div>
+        </div>
+        <div>
+          <h2 class="text-center">Gantt chart</h2>
+          <div id="GanttChart" class="relative z-0"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

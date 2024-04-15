@@ -1,4 +1,4 @@
-var Gantt = (function () {
+export var Gantt = (function () {
   "use strict";
 
   const YEAR = "year";
@@ -525,6 +525,7 @@ var Gantt = (function () {
     }
 
     draw_resize_handles() {
+      //ToDo function always returns here
       if (this.invalid) return;
 
       const bar = this.$bar;
@@ -1047,6 +1048,8 @@ var Gantt = (function () {
     setup_tasks(tasks) {
       // prepare tasks
       this.tasks = tasks.map((task, i) => {
+        /*console.log("setup tasks");
+        console.log(task)*/
         // convert to Date objects
         task._start = date_utils.parse(task.start);
         task._end = date_utils.parse(task.end);
@@ -1507,7 +1510,6 @@ var Gantt = (function () {
     }
 
     make_bars() {
-      console.log("makeBars");
       this.bars = this.tasks.map((task) => {
         const bar = new Bar(this, task);
         this.layers.bar.appendChild(bar.group);
@@ -1614,8 +1616,6 @@ var Gantt = (function () {
 
         bar_wrapper.classList.add("active");
 
-        //x_on_start = e.offsetX;
-        //y_on_start = e.offsetY;
         x_on_start = e.clientX;
         y_on_start = e.clientY;
 
@@ -1641,14 +1641,11 @@ var Gantt = (function () {
         if (!action_in_progress()) return;
         const dx = e.clientX - x_on_start;
         const dy = e.clientY - y_on_start;
-        /*const dx = e.offsetX - x_on_start;
-        const dy = e.offsetY - y_on_start;*/
         bars.forEach((bar) => {
           const $bar = bar.$bar;
           $bar.finaldx = this.get_snap_position(dx);
-
           if (is_resizing_left) {
-            if (parent_bar_id === bar.task.id) {
+            if (parent_bar_id == bar.task.id) {
               bar.update_bar_position({
                 x: $bar.ox + $bar.finaldx,
                 width: $bar.owidth - $bar.finaldx,
@@ -1659,7 +1656,7 @@ var Gantt = (function () {
               });
             }
           } else if (is_resizing_right) {
-            if (parent_bar_id === bar.task.id) {
+            if (parent_bar_id == bar.task.id) {
               bar.update_bar_position({
                 width: $bar.owidth + $bar.finaldx,
               });
@@ -1705,8 +1702,6 @@ var Gantt = (function () {
         is_resizing = true;
         x_on_start = e.clientX;
         y_on_start = e.clientY;
-        /*x_on_start = e.offsetX;
-        y_on_start = e.offsetY;*/
 
         const $bar_wrapper = $.closest(".bar-wrapper", handle);
         const id = $bar_wrapper.getAttribute("data-id");
@@ -1816,13 +1811,13 @@ var Gantt = (function () {
 
     get_task(id) {
       return this.tasks.find((task) => {
-        return task.id === id;
+        return task.id == parseInt(id);
       });
     }
 
     get_bar(id) {
       return this.bars.find((bar) => {
-        return bar.task.id === id;
+        return bar.task.id == parseInt(id);
       });
     }
 

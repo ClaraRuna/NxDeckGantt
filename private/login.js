@@ -1,7 +1,6 @@
 import conf from "./conf";
 
-export default () => ({
-});
+export default () => ({});
 
 export function getCredentials() {
   let username = document.getElementById("username").value;

@@ -27,6 +27,7 @@ export default () => ({
     try {
       this.decks = loadDecks();
       this.decks.then((response) => {
+        console.log(response)
           loggedInView();
       });
       this.decks.catch((error) =>{
@@ -82,7 +83,7 @@ export async function loadDecks() {
   if (response.status === 200) {
     return await response.json();
   } else {
-    retunr new Error(`Unexpected response: ${response}`);
+    throw new Error(`Unexpected response: ${response}`);
   }
 }
 
@@ -97,7 +98,7 @@ export async function loadDeck(id) {
     },
   });
   if (response.status === 200) {
-    return createTasks(await response.json(), id).then(loggedInView);
+    return createTasks(await response.json(), id);
   } else {
     return new Error(`Unexpected response: ${response}`);
   }
@@ -105,6 +106,7 @@ export async function loadDeck(id) {
 
 function logIn() {
   loadDecks().then(loggedInView);
+  loggedInView();
 }
 
 function loadingView() {
@@ -114,7 +116,7 @@ function loadingView() {
 }
 function loggedInView() {
   document.getElementById("Login").classList.add("hidden");
-  //document.getElementById("MainContent").classList.remove("hidden");
+  document.getElementById("MainContent").classList.remove("hidden");
 }
 
 function loggedOutView() {

@@ -1,4 +1,5 @@
 import conf from "./conf";
+import {getCredentials} from "./login";
 
 export function createTasks(stacks, deckId) {
   let tasks = [];
@@ -119,13 +120,14 @@ class Task {
   }
 
   setDueDateAndDuration(start, end) {
-    let duration = end.getDate() - start.getDate();
+    const msPerDay = 1000 * 60 * 60 * 24;
+    let duration = Math.round((end - start)/msPerDay);
     this.setDurationInDescription(duration);
     this.dueDate = end;
     this.putToRemote();
   }
   setDurationInDescription(newDurationInDays) {
-    this.setInDescription("d", 1);
+    this.setInDescription("d", newDurationInDays);
   }
 
   setClassInDescription(task, newClass) {
@@ -164,7 +166,7 @@ class Task {
       duedate: this.end,
       order: this.order,
       owner: this.owner,
-      title: this.title,
+      title: this.name,
       type: "plain",
     };
 
@@ -176,6 +178,7 @@ class Task {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": "Basic " + getCredentials(),
         },
         body: JSON.stringify(requestData),
       }

@@ -123,7 +123,11 @@ class Task {
     const msPerDay = 1000 * 60 * 60 * 24;
     let duration = Math.round((end - start)/msPerDay);
     this.setDurationInDescription(duration);
-    this.dueDate = end;
+    console.log("old duedate: " + this.end);
+    console.log("new duedate: " + end)
+    this.end = this.calculateEnd(end);
+    console.log(this.end);
+    console.log(duration);
     this.putToRemote();
   }
   setDurationInDescription(newDurationInDays) {
@@ -142,6 +146,7 @@ class Task {
     this.setInDescription(task, letter, value);
   }
   setInDescription(letter, value) {
+    console.log("old description: " + this.description);
     let regex = new RegExp(letter + ":(.*?):" + letter);
     let newExp = `${letter}:${value}:${letter}`;
     let description = this.description;
@@ -150,6 +155,7 @@ class Task {
     } else {
       description = description + newExp;
     }
+    console.log("new description: " + description);
     this.description = description;
   }
 

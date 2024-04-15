@@ -26,17 +26,20 @@ export default () => ({
     loadingView();
     try {
       this.decks = loadDecks();
-      this.decks.then(loggedInView);
-      this.decks.catch(loggedOutView);
+      this.decks.then((response) => {
+          loggedInView();
+      });
+      this.decks.catch((error) =>{
+        loggedOutView();
+        window.alert(error.message);
+      }
+    )
     } catch (error) {
-      window.alert(error.message);
-      loggedOutView();
     }
     this.currentDeck = {};
     this.currentDeck.cards = [];
     let deckNav = document.getElementById("DeckNav");
     let navTab = document.getElementById("NavTab");
-    console.log("offsetWidth: " + deckNav.offsetWidth)
     navTab.style.left = deckNav.offsetWidth;
   },
   openDeck(id, name) {
@@ -61,6 +64,7 @@ export default () => ({
     let scheduledTasks = getScheduledTasks(this.currentDeck.cards);
     return scheduledTasks;
   },
+  logIn,
   decks: [],
   currentDeck: {},
 });
@@ -78,7 +82,7 @@ export async function loadDecks() {
   if (response.status === 200) {
     return await response.json();
   } else {
-    return new Error(`Unexpected response: ${response}`);
+    retunr new Error(`Unexpected response: ${response}`);
   }
 }
 
@@ -93,23 +97,29 @@ export async function loadDeck(id) {
     },
   });
   if (response.status === 200) {
-    return createTasks(await response.json(), id);
+    return createTasks(await response.json(), id).then(loggedInView);
   } else {
     return new Error(`Unexpected response: ${response}`);
   }
 }
 
+function logIn() {
+  loadDecks().then(loggedInView);
+}
+
 function loadingView() {
   document.getElementById("Login").classList.add("hidden");
   document.getElementById("MainContent").classList.add("hidden");
+  //document.getElementById("DeckNav").classList.add("hidden");
 }
 function loggedInView() {
   document.getElementById("Login").classList.add("hidden");
-  document.getElementById("MainContent").classList.remove("hidden");
+  //document.getElementById("MainContent").classList.remove("hidden");
 }
 
 function loggedOutView() {
   console.log("render logged out view");
+  document.getElementById("DeckSelection").classList.add("hidden");
   document.getElementById("Login").classList.remove("hidden");
-  document.getElementById("MainContent").classList.add("hidden");
+  //document.getElementById("MainContent").classList.add("hidden");
 }

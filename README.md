@@ -1,8 +1,6 @@
 # ToDo
 
-- decks tab has inline style left:0px -> Problem!!
-- remove Cookie stuff
-- refactor duration to start date
+- alert area: https://codewithhugo.com/alpinejs-component-communication-event-bus/
 
 # Security
 

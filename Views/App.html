@@ -29,7 +29,7 @@
         <p class="pb-10">
           Please log in to give this app access to your Nextcloud Account.
         </p>
-        <form x-data="login" @submit.prevent="saveCookieAndReload">
+        <form x-data="$store.decks" @submit.prevent="logIn">
           <input
             id="username"
             type="text"
@@ -50,11 +50,7 @@
       </div>
     </div>
     <div x-data="$store.decks">
-      <div
-        id="DeckSelection"
-        class="fixed z-10 h-full"
-        @click.outside="close"
-      >
+      <div id="DeckSelection" class="fixed z-10 h-full" @click.outside="close">
         <div
           id="DeckNav"
           class="relative z-20 inline-block h-full bg-white md:min-w-80"

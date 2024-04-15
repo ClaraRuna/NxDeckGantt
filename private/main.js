@@ -3,8 +3,6 @@ import { getCredentials } from "./login";
 import decks from "./decks";
 import login from "./login";
 
-Alpine.data("login", login);
-
 window.Alpine = Alpine;
 
 document.addEventListener("alpine:init", () => {

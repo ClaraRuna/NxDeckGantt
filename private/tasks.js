@@ -17,11 +17,6 @@ export function createTasks(stacks, deckId) {
           card.duedate,
           deckId
         );
-        //here the Dates are wrong
-        console.log("dueDate");
-        console.log(card.duedate);
-        console.log("newTask");
-        console.log(newTask);
         tasks.push(newTask);
       }
     }
@@ -84,7 +79,6 @@ class Task {
     return this.end.getDate() - this.start.getDate();
   }
 
-  // transform date to string
   calculateEnd(date) {
     if (!date) {
       return null;
@@ -134,12 +128,18 @@ class Task {
     this.setInDescription("d", newDurationInDays);
   }
 
+  //currently unused
   setClassInDescription(task, newClass) {
-    this.setInDescription(task, letter, value);
+    this.setInDescription("c", newClass);
   }
 
-  setProgressInDescription(task, newProgress) {
-    this.setInDescription(task, letter, value);
+  setProgressInDescription(newProgress) {
+    this.setInDescription("p", newProgress);
+  }
+
+  setProgress(newProgress){
+    this.setProgressInDescription(newProgress);
+    this.putToRemote();
   }
 
   setDependencyInDescription(task, newDependency) {
@@ -153,7 +153,7 @@ class Task {
     if (description.search(regex) !== -1) {
       description = description.replace(regex, newExp);
     } else {
-      description = description + newExp;
+      description = description + newExp + "\n";
     }
     console.log("new description: " + description);
     this.description = description;

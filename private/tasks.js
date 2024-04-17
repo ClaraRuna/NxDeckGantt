@@ -1,5 +1,5 @@
 import conf from "./conf";
-import {getCredentials} from "./login";
+import { getCredentials } from "./login";
 
 export function createTasks(stacks, deckId) {
   let tasks = [];
@@ -115,10 +115,8 @@ class Task {
 
   setDueDateAndDuration(start, end) {
     const msPerDay = 1000 * 60 * 60 * 24;
-    let duration = Math.round((end - start)/msPerDay);
+    let duration = Math.round((end - start) / msPerDay);
     this.setDurationInDescription(duration);
-    console.log("old duedate: " + this.end);
-    console.log("new duedate: " + end)
     this.end = this.calculateEnd(end);
     console.log(this.end);
     console.log(duration);
@@ -137,13 +135,13 @@ class Task {
     this.setInDescription("p", newProgress);
   }
 
-  setProgress(newProgress){
+  setProgress(newProgress) {
     this.setProgressInDescription(newProgress);
     this.putToRemote();
   }
 
   setDependencyInDescription(task, newDependency) {
-    this.setInDescription(task, letter, value);
+    this.setInDescription("w", newDependency);
   }
   setInDescription(letter, value) {
     console.log("old description: " + this.description);
@@ -160,10 +158,8 @@ class Task {
   }
 
   isScheduled() {
-    if (this.end) {
-      return true;
-    }
-    return false;
+    return !!this.end;
+
   }
 
   putToRemote() {
@@ -184,7 +180,7 @@ class Task {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Basic " + getCredentials(),
+          Authorization: "Basic " + getCredentials(),
         },
         body: JSON.stringify(requestData),
       }

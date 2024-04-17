@@ -27,16 +27,14 @@ export default () => ({
     try {
       this.decks = loadDecks();
       this.decks.then((response) => {
-        console.log(response)
-          loggedInView();
+        console.log(response);
+        loggedInView();
       });
-      this.decks.catch((error) =>{
+      this.decks.catch((error) => {
         loggedOutView();
         window.alert(error.message);
-      }
-    )
-    } catch (error) {
-    }
+      });
+    } catch (error) {}
     this.currentDeck = {};
     this.currentDeck.cards = [];
     let deckNav = document.getElementById("DeckNav");
@@ -62,8 +60,7 @@ export default () => ({
     return getUnscheduledTasks(this.currentDeck.cards);
   },
   getScheduledTasks() {
-    let scheduledTasks = getScheduledTasks(this.currentDeck.cards);
-    return scheduledTasks;
+    return getScheduledTasks(this.currentDeck.cards);
   },
   logIn,
   decks: [],

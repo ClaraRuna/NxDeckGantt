@@ -26,8 +26,7 @@ export function createGantt(tasks) {
       task.setDueDateAndDuration(start, end);
     },
     on_progress_change: function (task, progress) {
-      console.log(task, task._start, task._end, progress);
-      //udpateCard(task, task._start, task._end, progress);
+      task.setProgress(progress);
     },
     on_view_change: function (mode) {
       console.log(mode);

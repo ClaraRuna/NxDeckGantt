@@ -1,5 +1,5 @@
 import conf from "./conf";
-import {getCredentials} from "./login";
+import { getCredentials } from "./login";
 
 export function createTasks(stacks, deckId) {
   let tasks = [];
@@ -17,11 +17,6 @@ export function createTasks(stacks, deckId) {
           card.duedate,
           deckId
         );
-        //here the Dates are wrong
-        console.log("dueDate");
-        console.log(card.duedate);
-        console.log("newTask");
-        console.log(newTask);
         tasks.push(newTask);
       }
     }
@@ -84,7 +79,6 @@ class Task {
     return this.end.getDate() - this.start.getDate();
   }
 
-  // transform date to string
   calculateEnd(date) {
     if (!date) {
       return null;
@@ -121,43 +115,51 @@ class Task {
 
   setDueDateAndDuration(start, end) {
     const msPerDay = 1000 * 60 * 60 * 24;
-    let duration = Math.round((end - start)/msPerDay);
+    let duration = Math.round((end - start) / msPerDay);
     this.setDurationInDescription(duration);
-    this.dueDate = end;
+    this.end = this.calculateEnd(end);
+    console.log(this.end);
+    console.log(duration);
     this.putToRemote();
   }
   setDurationInDescription(newDurationInDays) {
     this.setInDescription("d", newDurationInDays);
   }
 
+  //currently unused
   setClassInDescription(task, newClass) {
-    this.setInDescription(task, letter, value);
+    this.setInDescription("c", newClass);
   }
 
-  setProgressInDescription(task, newProgress) {
-    this.setInDescription(task, letter, value);
+  setProgressInDescription(newProgress) {
+    this.setInDescription("p", newProgress);
+  }
+
+  setProgress(newProgress) {
+    this.setProgressInDescription(newProgress);
+    this.putToRemote();
   }
 
   setDependencyInDescription(task, newDependency) {
-    this.setInDescription(task, letter, value);
+    this.setInDescription("w", newDependency);
   }
   setInDescription(letter, value) {
+    console.log("old description: " + this.description);
     let regex = new RegExp(letter + ":(.*?):" + letter);
     let newExp = `${letter}:${value}:${letter}`;
     let description = this.description;
     if (description.search(regex) !== -1) {
       description = description.replace(regex, newExp);
     } else {
-      description = description + newExp;
+      description = description + newExp + "\n";
     }
+    console.log("new description: " + description);
     this.description = description;
   }
 
   isScheduled() {
-    if (this.end) {
-      return true;
-    }
-    return false;
+    return !!this.end;
+
   }
 
   putToRemote() {
@@ -178,7 +180,7 @@ class Task {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Basic " + getCredentials(),
+          Authorization: "Basic " + getCredentials(),
         },
         body: JSON.stringify(requestData),
       }

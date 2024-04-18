@@ -85,16 +85,17 @@
                     id="MainContent"
                     class="top-0 z-0 m-auto hidden w-full justify-center"
             >
-                <div class="m-auto">
-                    <h1 class="bg-gray-50 text-center" x-text="getCurrentDeckName"></h1>
+                <h1 class="bg-gray-50 text-center" x-text="getCurrentDeckName"></h1>
+                <div class="mx-20" x-show="getUnscheduledTasks().length>0">
                     <h2 class="text-center my-5">Unscheduled tasks</h2>
-                    <div id="UnscheduledCards">
+
+                    <div id="UnscheduledCards" class="m-auto max-w-screen-xl">
                         <template x-for="card in getUnscheduledTasks">
-                            <li class="border-b-2 border-gray-50">
+                            <li class="border-b-2 border-gray-50 list-none">
                                 <a
                                         href="#"
-                                        class="block w-full p-3 hover:bg-gray-100"
-                                        x-text="card.name + card.end"
+                                        class="block w-full p-3 cursor-default"
+                                        x-text="card.name"
                                 >
                                 </a>
                             </li>

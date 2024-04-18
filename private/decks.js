@@ -26,23 +26,21 @@ export default () => ({
     loadingView();
     try {
       this.decks = loadDecks();
-      this.decks.then((response) => {
-        console.log(response);
+      this.decks.then(() => {
         loggedInView();
+        document.getElementById("LoadingOverlay").classList.remove("z-30");
+        document.getElementById("LoadingOverlay").classList.remove("z-10");
       });
-      this.decks.catch((error) => {
+      this.decks.catch(() => {
         loggedOutView();
-        window.alert(error.message);
       });
     } catch (error) {}
     this.currentDeck = {};
     this.currentDeck.cards = [];
-    let deckNav = document.getElementById("DeckNav");
-    let navTab = document.getElementById("NavTab");
-    navTab.style.left = deckNav.offsetWidth;
   },
   openDeck(id, name) {
     loadDeck(id).then((cards) => {
+      loggedInView();
       this.currentDeck.name = name;
       this.currentDeck.cards = cards;
       this.currentDeck.id = id;
@@ -85,6 +83,7 @@ export async function loadDecks() {
 }
 
 export async function loadDeck(id) {
+  loadingView();
   let credentials = getCredentials();
   let url = conf.NC_URL + conf.BOARD_ENDPOINT + "/" + id + "/stacks";
 
@@ -109,16 +108,17 @@ function logIn() {
 function loadingView() {
   document.getElementById("Login").classList.add("hidden");
   document.getElementById("MainContent").classList.add("hidden");
-  //document.getElementById("DeckNav").classList.add("hidden");
+  document.getElementById("LoadingOverlay").classList.remove("hidden");
 }
 function loggedInView() {
   document.getElementById("Login").classList.add("hidden");
   document.getElementById("MainContent").classList.remove("hidden");
+  document.getElementById("LoadingOverlay").classList.add("hidden");
 }
 
 function loggedOutView() {
   console.log("render logged out view");
   document.getElementById("DeckSelection").classList.add("hidden");
   document.getElementById("Login").classList.remove("hidden");
-  //document.getElementById("MainContent").classList.add("hidden");
+  document.getElementById("LoadingOverlay").classList.add("hidden");
 }

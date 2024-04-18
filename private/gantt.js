@@ -17,7 +17,6 @@ export function createGantt(tasks) {
     date_format: "YYYY-MM-DD",
     custom_popup_html: null,
     custom_class: "bar-red",
-    //ToDo dynamic language
     language: "en",
     on_click: function (task) {
       console.log(task);

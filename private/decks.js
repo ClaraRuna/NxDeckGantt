@@ -44,8 +44,12 @@ export default () => ({
       this.currentDeck.name = name;
       this.currentDeck.cards = cards;
       this.currentDeck.id = id;
-      createGantt(this.getScheduledTasks());
-      this.close();
+      let scheduledTasks = this.getScheduledTasks()
+      if (scheduledTasks.length > 0){
+        createGantt(this.getScheduledTasks());
+      }
+    }).finally(() => {
+      this.close()
     });
   },
   getCurrentDeckCards() {
@@ -84,6 +88,7 @@ export async function loadDecks() {
 
 export async function loadDeck(id) {
   loadingView();
+  this.currentDeck = null;
   let credentials = getCredentials();
   let url = conf.NC_URL + conf.BOARD_ENDPOINT + "/" + id + "/stacks";
 

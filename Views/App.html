@@ -87,7 +87,7 @@
             >
                 <div class="m-auto">
                     <h1 class="bg-gray-50 text-center" x-text="getCurrentDeckName"></h1>
-                    <h2 class="text-center">Unscheduled tasks</h2>
+                    <h2 class="text-center my-5">Unscheduled tasks</h2>
                     <div id="UnscheduledCards">
                         <template x-for="card in getUnscheduledTasks">
                             <li class="border-b-2 border-gray-50">
@@ -101,8 +101,8 @@
                         </template>
                     </div>
                 </div>
-                <div>
-                    <h2 class="text-center">Gantt chart</h2>
+                <div x-show="getScheduledTasks().length>0">
+                    <h2 class="text-center my-5">Gantt chart</h2>
                     <div id="GanttChart" class="relative z-0"></div>
                 </div>
             </div>

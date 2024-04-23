@@ -1,136 +1,136 @@
 <!DOCTYPE html>
 <html>
-    <title>App</title>
-    <link rel="stylesheet" href="../public/Styles/main.css"/>
-    <script defer src="../public/Scripts/main.js"></script>
+  <title>App</title>
+  <link rel="stylesheet" href="../public/Styles/main.css" />
+  <script defer src="../public/Scripts/main.js"></script>
 
-    <body class="min-h-screen" style="display: none" id="Body">
-        <header class="md-relative sticky top-0 z-30 bg-white shadow-sm">
-            <div
-                    class="mx-auto flex min-h-12 max-w-7xl items-center justify-between lg:px-8"
-                    aria-label="Global"
-            >
-                <a href="#" class="-m-1.5 p-1.5">
-                    <span class="sr-only">Logo</span>
-                    <img
-                            class="h-8 w-auto"
-                            src="https://www.wuerzburg.de/__/images/2017/logo.svg"
-                            alt=""
-                    />
+  <body class="min-h-screen" style="display: none" id="Body">
+    <header class="md-relative sticky top-0 z-30 bg-white shadow-sm">
+      <div
+        class="mx-auto flex min-h-12 max-w-7xl items-center justify-between lg:px-8"
+        aria-label="Global"
+      >
+        <a href="#" class="-m-1.5 p-1.5">
+          <span class="sr-only">Logo</span>
+          <img
+            class="h-8 w-auto"
+            src="https://www.wuerzburg.de/__/images/2017/logo.svg"
+            alt=""
+          />
+        </a>
+      </div>
+    </header>
+
+    <div
+      id="Login"
+      class="absolute top-0 flex hidden h-full w-full items-center justify-center"
+    >
+      <div class="rounded-lg border p-10 shadow">
+        <p class="pb-10">
+          Please log in to give this app access to your Nextcloud Account.
+        </p>
+        <form x-data="$store.decks" @submit.prevent="logIn">
+          <input
+            id="username"
+            type="text"
+            class="mx-auto mb-4 inline rounded-lg border bg-white px-3 py-1.5 text-base text-gray-900 hover:cursor-text hover:bg-gray-50 active:shadow-inner"
+          />
+          <input
+            id="password"
+            type="password"
+            class="mx-auto mb-4 inline rounded-lg border bg-white px-3 py-1.5 text-base text-gray-900 hover:cursor-text hover:bg-gray-50 active:shadow-inner"
+          />
+          <button
+            class="bg-white-50 mx-auto mb-12 block rounded-lg border bg-gray-50 px-3 py-1.5 text-center text-base font-semibold leading-7 text-gray-900 hover:cursor-pointer hover:bg-gray-100 active:shadow-inner"
+            type="submit"
+          >
+            Log in
+          </button>
+        </form>
+      </div>
+    </div>
+    <div x-data="$store.decks">
+      <div id="DeckSelection" class="fixed z-10 h-full" @click.outside="close">
+        <div
+          id="DeckNav"
+          class="relative z-20 inline-block h-full bg-white md:min-w-80"
+        >
+          <nav class="h-full w-full shadow-sm overflow-scroll">
+            <ul>
+              <template x-for="deck in decks">
+                <li
+                  class="border-b-2 border-gray-50"
+                  @click="openDeck(deck.id, deck.title)"
+                >
+                  <a
+                    x-text="deck.title"
+                    href="#"
+                    class="block w-full p-3 hover:bg-gray-100"
+                  >
+                  </a>
+                </li>
+              </template>
+            </ul>
+          </nav>
+        </div>
+        <div
+          id="NavTab"
+          class="absolute top-20 z-10 inline-block -translate-x-1/3 rotate-90 rounded-t-lg border bg-gray-50 bg-white p-4 shadow-sm hover:cursor-pointer hover:bg-gray-100"
+          @click="toggle"
+        >
+          <div class="">Decks</div>
+        </div>
+      </div>
+      <div
+        id="MainContent"
+        class="top-0 z-0 m-auto hidden w-full justify-center"
+      >
+        <h1 class="bg-gray-50 text-center" x-text="getCurrentDeckName"></h1>
+        <div class="mx-20" x-show="getUnscheduledTasks().length>0">
+          <h2 class="my-5 text-center">Unscheduled tasks</h2>
+
+          <div id="UnscheduledCards" class="m-auto max-w-screen-xl">
+            <template x-for="card in getUnscheduledTasks">
+              <li class="list-none border-b-2 border-gray-50">
+                <a
+                  href="#"
+                  class="block w-full cursor-default p-3"
+                  x-text="card.name"
+                >
                 </a>
-            </div>
-        </header>
-
-        <div
-                id="Login"
-                class="absolute top-0 flex hidden h-full w-full items-center justify-center"
+              </li>
+            </template>
+          </div>
+        </div>
+        <div x-show="getScheduledTasks().length>0">
+          <h2 class="my-5 text-center">Gantt chart</h2>
+          <div id="GanttChart" class="relative z-0"></div>
+        </div>
+      </div>
+    </div>
+    <div
+      id="LoadingOverlay"
+      class="absolute z-30 hidden h-full w-full bg-white"
+    >
+      <div class="relative top-1/2 m-auto max-w-screen-md text-center">
+        <svg
+          class="spinner m-auto"
+          width="65px"
+          height="65px"
+          viewBox="0 0 66 66"
+          xmlns="http://www.w3.org/2000/svg"
         >
-            <div class="rounded-lg border p-10 shadow">
-                <p class="pb-10">
-                    Please log in to give this app access to your Nextcloud Account.
-                </p>
-                <form x-data="$store.decks" @submit.prevent="logIn">
-                    <input
-                            id="username"
-                            type="text"
-                            class="mx-auto mb-4 inline rounded-lg border bg-white px-3 py-1.5 text-base text-gray-900 hover:cursor-text hover:bg-gray-50 active:shadow-inner"
-                    />
-                    <input
-                            id="password"
-                            type="password"
-                            class="mx-auto mb-4 inline rounded-lg border bg-white px-3 py-1.5 text-base text-gray-900 hover:cursor-text hover:bg-gray-50 active:shadow-inner"
-                    />
-                    <button
-                            class="bg-white-50 mx-auto mb-12 block rounded-lg border bg-gray-50 px-3 py-1.5 text-center text-base font-semibold leading-7 text-gray-900 hover:cursor-pointer hover:bg-gray-100 active:shadow-inner"
-                            type="submit"
-                    >
-                        Log in
-                    </button>
-                </form>
-            </div>
-        </div>
-        <div x-data="$store.decks">
-            <div id="DeckSelection" class="fixed z-10 h-full" @click.outside="close">
-                <div
-                        id="DeckNav"
-                        class="relative z-20 inline-block h-full bg-white md:min-w-80"
-                >
-                    <nav class="h-full w-full shadow-sm">
-                        <ul>
-                            <template x-for="deck in decks">
-                                <li
-                                        class="border-b-2 border-gray-50"
-                                        @click="openDeck(deck.id, deck.title)"
-                                >
-                                    <a
-                                            x-text="deck.title"
-                                            href="#"
-                                            class="block w-full p-3 hover:bg-gray-100"
-                                    >
-                                    </a>
-                                </li>
-                            </template>
-                        </ul>
-                    </nav>
-                </div>
-                <div
-                        id="NavTab"
-                        class="absolute top-20 z-10 inline-block -translate-x-1/3 rotate-90 rounded-t-lg border bg-gray-50 bg-white p-4 shadow-sm hover:cursor-pointer hover:bg-gray-100"
-                        @click="toggle"
-                >
-                    <div class="">Decks</div>
-                </div>
-            </div>
-            <div
-                    id="MainContent"
-                    class="top-0 z-0 m-auto hidden w-full justify-center"
-            >
-                <h1 class="bg-gray-50 text-center" x-text="getCurrentDeckName"></h1>
-                <div class="mx-20" x-show="getUnscheduledTasks().length>0">
-                    <h2 class="text-center my-5">Unscheduled tasks</h2>
-
-                    <div id="UnscheduledCards" class="m-auto max-w-screen-xl">
-                        <template x-for="card in getUnscheduledTasks">
-                            <li class="border-b-2 border-gray-50 list-none">
-                                <a
-                                        href="#"
-                                        class="block w-full p-3 cursor-default"
-                                        x-text="card.name"
-                                >
-                                </a>
-                            </li>
-                        </template>
-                    </div>
-                </div>
-                <div x-show="getScheduledTasks().length>0">
-                    <h2 class="text-center my-5">Gantt chart</h2>
-                    <div id="GanttChart" class="relative z-0"></div>
-                </div>
-            </div>
-        </div>
-        <div
-                id="LoadingOverlay"
-                class="absolute z-30 hidden h-full w-full bg-white"
-        >
-            <div class="relative top-1/2 m-auto max-w-screen-md text-center">
-                <svg
-                        class="spinner m-auto"
-                        width="65px"
-                        height="65px"
-                        viewBox="0 0 66 66"
-                        xmlns="http://www.w3.org/2000/svg"
-                >
-                    <circle
-                            class="path"
-                            fill="none"
-                            stroke-width="6"
-                            stroke-linecap="round"
-                            cx="33"
-                            cy="33"
-                            r="30"
-                    ></circle>
-                </svg>
-            </div>
-        </div>
-    </body>
+          <circle
+            class="path"
+            fill="none"
+            stroke-width="6"
+            stroke-linecap="round"
+            cx="33"
+            cy="33"
+            r="30"
+          ></circle>
+        </svg>
+      </div>
+    </div>
+  </body>
 </html>

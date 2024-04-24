@@ -1,3 +1,4 @@
+import FrappeGanttHelpers from "./frappe-gantt-helpers";
 export var Gantt = (function () {
   "use strict";
 
@@ -1230,7 +1231,8 @@ export var Gantt = (function () {
       this.make_arrows();
       this.map_arrows_on_bars();
       this.set_width();
-      this.set_scroll_position();
+      FrappeGanttHelpers.elementResized(this.$svg).then(() =>
+        this.set_scroll_position());
     }
 
     setup_layers() {

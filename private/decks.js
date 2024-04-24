@@ -1,7 +1,7 @@
 import conf from "./conf";
-import {createTasks, getScheduledTasks, getUnscheduledTasks} from "./tasks";
-import {createGantt} from "./gantt";
-import {getCredentials} from "./login";
+import { createTasks, filterScheduledTasks, filterUnscheduledTasks } from "./tasks";
+import { createGantt } from "./gantt";
+import { getCredentials } from "./login";
 
 export default () => ({
     toggle() {
@@ -71,11 +71,11 @@ export default () => ({
     }
     ,
     getUnscheduledTasks() {
-        return getUnscheduledTasks(this.currentDeck.cards);
+        return filterUnscheduledTasks(this.currentDeck.cards);
     }
     ,
     getScheduledTasks() {
-        return getScheduledTasks(this.currentDeck.cards);
+        return filterScheduledTasks(this.currentDeck.cards);
     }
     ,
     logIn,

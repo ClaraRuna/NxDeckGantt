@@ -54,7 +54,7 @@ export default () => ({
                 this.currentDeck.id = id;
                 let scheduledTasks = this.getScheduledTasks();
                 if (scheduledTasks.length > 0) {
-                    createGantt(this.getScheduledTasks());
+                    createGantt(this.getScheduledTasks(), this.userLang);
                 }
             })
             .finally(() => {
@@ -84,6 +84,8 @@ export default () => ({
     currentDeck:
         {}
     ,
+    userLang: navigator.language || navigator.userLanguage
+
 });
 
 export async function loadDecks() {

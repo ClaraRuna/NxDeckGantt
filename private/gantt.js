@@ -1,8 +1,9 @@
 import { Gantt } from "./frappe-gantt";
 
-export function createGantt(tasks) {
-  /*  console.log("createGantt")
-  console.log(tasks)*/
+export function createGantt(tasks, userLang = "en") {
+
+  let lang = userLang.slice(0,2);
+  console.log(lang)
 
   var gantt = new Gantt("#GanttChart", tasks, {
     header_height: 50,
@@ -17,7 +18,7 @@ export function createGantt(tasks) {
     date_format: "YYYY-MM-DD",
     custom_popup_html: null,
     custom_class: "bar-red",
-    language: "en",
+    language: lang,
     on_click: function (task) {
       console.log(task);
     },

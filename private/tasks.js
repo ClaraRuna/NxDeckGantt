@@ -24,7 +24,7 @@ export function createTasks(stacks, deckId) {
   return tasks;
 }
 
-export function getScheduledTasks(tasks) {
+export function filterScheduledTasks(tasks = []) {
   let filteredTasks = tasks.filter(function (task) {
     return task.isScheduled();
   });
@@ -34,7 +34,7 @@ export function getScheduledTasks(tasks) {
   return filteredTasks;
 }
 
-export function getUnscheduledTasks(tasks) {
+export function filterUnscheduledTasks(tasks = []) {
   return tasks.filter(function (task) {
     return !task.isScheduled();
   });
@@ -159,7 +159,6 @@ class Task {
 
   isScheduled() {
     return !!this.end;
-
   }
 
   putToRemote() {

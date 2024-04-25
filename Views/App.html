@@ -4,10 +4,10 @@
   <link rel="stylesheet" href="../public/Styles/main.css" />
   <script defer src="../public/Scripts/main.js"></script>
 
-  <body class="min-h-screen">
+  <body class="min-h-screen" style="display: none" id="Body">
     <header class="md-relative sticky top-0 z-30 bg-white shadow-sm">
       <div
-        class="mx-auto flex min-h-12 max-w-7xl items-center justify-between lg:px-8"
+        class="mx-8 mx-auto flex min-h-12 max-w-7xl items-center justify-between lg:px-8"
         aria-label="Global"
       >
         <a href="#" class="-m-1.5 p-1.5">
@@ -55,7 +55,7 @@
           id="DeckNav"
           class="relative z-20 inline-block h-full bg-white md:min-w-80"
         >
-          <nav class="h-full w-full shadow-sm">
+          <nav class="h-full w-full overflow-scroll shadow-sm">
             <ul>
               <template x-for="deck in decks">
                 <li
@@ -85,26 +85,51 @@
         id="MainContent"
         class="top-0 z-0 m-auto hidden w-full justify-center"
       >
-        <div class="m-auto">
-          <h1 class="bg-gray-50 text-center" x-text="getCurrentDeckName"></h1>
-          <h2 class="text-center">Unscheduled tasks</h2>
-          <div id="UnscheduledCards">
+        <h1 class="bg-gray-50 text-center" x-text="getCurrentDeckName"></h1>
+        <div class="mx-20" x-show="getUnscheduledTasks().length>0">
+          <h2 class="my-5 text-center">Unscheduled tasks</h2>
+
+          <div id="UnscheduledCards" class="m-auto max-w-screen-xl">
             <template x-for="card in getUnscheduledTasks">
-              <li class="border-b-2 border-gray-50">
+              <li class="list-none border-b-2 border-gray-50">
                 <a
                   href="#"
-                  class="block w-full p-3 hover:bg-gray-100"
-                  x-text="card.name + card.end"
+                  class="block w-full cursor-default p-3"
+                  x-text="card.name"
                 >
                 </a>
               </li>
             </template>
           </div>
         </div>
-        <div>
-          <h2 class="text-center">Gantt chart</h2>
+        <div x-show="getScheduledTasks().length>0">
+          <h2 class="my-5 text-center">Gantt chart</h2>
           <div id="GanttChart" class="relative z-0"></div>
         </div>
+      </div>
+    </div>
+    <div
+      id="LoadingOverlay"
+      class="absolute z-30 hidden h-full w-full bg-white"
+    >
+      <div class="relative top-1/2 m-auto max-w-screen-md text-center">
+        <svg
+          class="spinner m-auto"
+          width="65px"
+          height="65px"
+          viewBox="0 0 66 66"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            class="path"
+            fill="none"
+            stroke-width="6"
+            stroke-linecap="round"
+            cx="33"
+            cy="33"
+            r="30"
+          ></circle>
+        </svg>
       </div>
     </div>
   </body>

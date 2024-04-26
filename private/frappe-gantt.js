@@ -1246,7 +1246,8 @@ export var Gantt = (function () {
       this.map_arrows_on_bars();
       this.set_width();
       FrappeGanttHelpers.elementResized(this.$svg).then(() =>
-        this.set_scroll_position());
+        this.set_scroll_position()
+      );
     }
 
     setup_layers() {

@@ -50,6 +50,19 @@
       </div>
     </div>
     <div x-data="$store.decks">
+      <div
+        id="ErrorWrapper"
+        class="error-wrapper fixed top-1/4 z-30 hidden w-full text-center"
+      >
+        <div
+          id="ErrorArea"
+          class="fit-content relative m-auto max-w-sm rounded-lg border bg-red-500 p-2 px-10 shadow lg:max-w-md xl:max-w-lg"
+        >
+          ErrorArea
+          <div class="inline align-right right "@click="hideError">X</div>
+
+        </div>
+      </div>
       <div id="DeckSelection" class="fixed z-10 h-full" @click.outside="close">
         <div
           id="DeckNav"

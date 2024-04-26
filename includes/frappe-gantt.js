@@ -52,6 +52,20 @@ var Gantt = (function () {
       "Novembre",
       "Decembre",
     ],
+    de: [
+      "Janvier",
+      "Fevrier",
+      "Mars",
+      "Avril",
+      "Mai",
+      "Juin",
+      "Juillet",
+      "Aout",
+      "September",
+      "Oktober",
+      "November",
+      "December",
+    ],
   };
 
   var date_utils = {

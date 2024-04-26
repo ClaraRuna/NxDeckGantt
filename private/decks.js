@@ -28,12 +28,22 @@ export default () => ({
   },
   init() {
     loadingView();
-    loadDecks().then((response) => {
+    this.loadDecks();
+  },
+  loadDecks() {
+    let credentials = getCredentials();
+    let url = conf.NC_URL + conf.BOARD_ENDPOINT;
+
+    fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: "Basic " + credentials,
+      },
+    }).then((response) => {
       if (response.status === 401) {
         loggedOutView();
       } else if (response.status === 200) {
         this.decks = response.json();
-        // todo trigger reload of decks in deck selection
         loggedInView();
         document.getElementById("LoadingOverlay").classList.remove("z-30");
         document.getElementById("LoadingOverlay").classList.remove("z-10");
@@ -72,35 +82,22 @@ export default () => ({
   getScheduledTasks() {
     return filterScheduledTasks(this.currentDeck.cards);
   },
-  logIn,
+  getDecks() {
+    return this.decks;
+  },
+  logIn() {
+    this.init();
+  },
   hideError,
-  decks: [],
   currentDeck: {},
   userLang: navigator.language || navigator.userLanguage,
 });
 
-export async function loadDecks() {
-    let credentials = getCredentials();
-    let url = conf.NC_URL + conf.BOARD_ENDPOINT;
-
-  let response = await fetch(url, {
-    method: "GET",
-    headers: {
-      Authorization: "Basic " + credentials,
-    },
-  });
-  if (response.status !== 200) {
-    setErrorMessage(response);
-  }
-
-  return response;
-}
-
 export async function loadDeck(id) {
-    loadingView();
-    this.currentDeck = null;
-    let credentials = getCredentials();
-    let url = conf.NC_URL + conf.BOARD_ENDPOINT + "/" + id + "/stacks";
+  loadingView();
+  this.currentDeck = null;
+  let credentials = getCredentials();
+  let url = conf.NC_URL + conf.BOARD_ENDPOINT + "/" + id + "/stacks";
 
   let response = await fetch(url, {
     method: "GET",
@@ -115,10 +112,6 @@ export async function loadDeck(id) {
   }
 }
 
-function logIn() {
-  loadingView();
-  loadDecks().then(this.init());
-}
 
 function loadingView() {
   document.getElementById("Login").classList.add("hidden");
@@ -129,6 +122,7 @@ function loadingView() {
 
 function loggedInView() {
   document.getElementById("Login").classList.add("hidden");
+  document.getElementById("DeckSelection").classList.remove("hidden");
   document.getElementById("MainContent").classList.remove("hidden");
   document.getElementById("LoadingOverlay").classList.add("hidden");
 }

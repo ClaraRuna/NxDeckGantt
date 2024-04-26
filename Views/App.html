@@ -4,7 +4,7 @@
   <link rel="stylesheet" href="../public/Styles/main.css" />
   <script defer src="../public/Scripts/main.js"></script>
 
-  <body class="min-h-screen" style="display: none" id="Body">
+  <body x-data="$store.decks" class="min-h-screen" style="display: none" id="Body">
     <header class="md-relative sticky top-0 z-30 bg-white shadow-sm">
       <div
         class="mx-8 mx-auto flex min-h-12 max-w-7xl items-center justify-between lg:px-8"
@@ -28,7 +28,7 @@
         <p class="pb-10">
           Please log in to give this app access to your Nextcloud Account.
         </p>
-        <form x-data="$store.decks" @submit.prevent="logIn">
+        <form @submit.prevent="logIn">
           <input
             id="username"
             type="text"
@@ -48,7 +48,7 @@
         </form>
       </div>
     </div>
-    <div x-data="$store.decks">
+    <div>
       <div
         id="ErrorWrapper"
         class="error-wrapper fixed top-1/4 z-30 hidden w-full text-center"
@@ -69,7 +69,7 @@
         >
           <nav class="h-full w-full overflow-scroll shadow-sm">
             <ul>
-              <template x-for="deck in decks">
+              <template x-for="deck in getDecks">
                 <li
                   class="border-b-2 border-gray-50"
                   @click="openDeck(deck.id, deck.title)"

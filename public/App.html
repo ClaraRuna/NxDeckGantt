@@ -4,7 +4,12 @@
   <link rel="stylesheet" href="../public/Styles/main.css" />
   <script defer src="../public/Scripts/main.js"></script>
 
-  <body x-data="$store.decks" class="min-h-screen" style="display: none" id="Body">
+  <body
+    x-data="$store.decks"
+    class="min-h-screen"
+    style="display: none"
+    id="Body"
+  >
     <header class="md-relative sticky top-0 z-30 bg-white shadow-sm">
       <div
         class="mx-8 mx-auto flex min-h-12 max-w-7xl items-center justify-between lg:px-8"
@@ -12,11 +17,7 @@
       >
         <a href="#" class="-m-1.5 p-1.5">
           <span class="sr-only">Logo</span>
-          <img
-            class="h-8 w-auto"
-            src="https://www.wuerzburg.de/__/images/2017/logo.svg"
-            alt=""
-          />
+          <img class="h-8 w-auto" src="../public/logo.svg" alt="" />
         </a>
       </div>
     </header>
@@ -29,15 +30,19 @@
           Please log in to give this app access to your Nextcloud Account.
         </p>
         <form @submit.prevent="logIn">
+          <label for="username" class="sr-only">Username</label>
           <input
             id="username"
             type="text"
             class="mx-auto mb-4 inline rounded-lg border bg-white px-3 py-1.5 text-base text-gray-900 hover:cursor-text hover:bg-gray-50 active:shadow-inner"
+            placeholder="Username"
           />
+          <label for="password" class="sr-only">Password</label>
           <input
             id="password"
             type="password"
             class="mx-auto mb-4 inline rounded-lg border bg-white px-3 py-1.5 text-base text-gray-900 hover:cursor-text hover:bg-gray-50 active:shadow-inner"
+            placeholder="Password"
           />
           <button
             class="bg-white-50 mx-auto mb-12 block rounded-lg border bg-gray-50 px-3 py-1.5 text-center text-base font-semibold leading-7 text-gray-900 hover:cursor-pointer hover:bg-gray-100 active:shadow-inner"
@@ -58,8 +63,7 @@
           class="fit-content relative m-auto max-w-sm rounded-lg border bg-red-500 p-2 px-10 shadow lg:max-w-md xl:max-w-lg"
         >
           ErrorArea
-          <div class="inline align-right right "@click="hideError">X</div>
-
+          <div class="align-right right inline" @click="hideError">X</div>
         </div>
       </div>
       <div id="DeckSelection" class="fixed z-10 h-full" @click.outside="close">
@@ -99,11 +103,13 @@
       >
         <h1 class="bg-gray-50 text-center" x-text="getCurrentDeckName"></h1>
         <div class="" x-show="getUnscheduledTasks().length>0">
-        <h2 class="my-5 text-center bg-gray-50 w-full">Unscheduled tasks</h2>
+          <h2 class="my-5 w-full bg-gray-50 text-center">Unscheduled tasks</h2>
 
-          <div id="UnscheduledCards" class="mx-20 ">
+          <div id="UnscheduledCards" class="mx-20">
             <template x-for="card in getUnscheduledTasks">
-              <li class="list-none border-b-2 border-gray-50 m-auto max-w-screen-xl">
+              <li
+                class="m-auto max-w-screen-xl list-none border-b-2 border-gray-50"
+              >
                 <a
                   href="#"
                   class="block w-full cursor-default p-3"
@@ -115,7 +121,7 @@
           </div>
         </div>
         <div x-show="getScheduledTasks().length>0">
-          <h2 class="my-5 text-center bg-gray-50 w-full">Gantt chart</h2>
+          <h2 class="my-5 w-full bg-gray-50 text-center">Gantt chart</h2>
           <div id="GanttChart" class="relative z-0"></div>
         </div>
       </div>

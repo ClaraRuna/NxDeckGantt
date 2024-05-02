@@ -1,63 +1,62 @@
-# ToDo
+# Nextcloud Deck Gantt
 
-- alert area: https://codewithhugo.com/alpinejs-component-communication-event-bus/
+Simple web interface using FrappeGantt to show and edit Nextcloud Deck Board cards in gantt format
 
-# Security
+Thanks to [jeobz](https://github.com/jeobz/NxDeckGantt) for the original beta version.
 
-The App Password and Login will be stored in your Browser. Therefore you should either create a separate user for the app or deny the app file system permissions via User->Settings->Security->Sessions. Find the App and uncheck "allow file system access" in the menu behind the 3 dots.
+Also thanks to: \
+[Nextcloud Deck](https://github.com/nextcloud/deck) for the great Nextcloud app \
+[Frappe](https://github.com/frappe/gantt) for the interactive javascript \
+[Stadt Würzburg](https://www.wuerzburg.de/) for sponsoring \
+[Tailwind CSS](https://tailwindcss.com/) \
+[Alpine.js](https://alpinejs.dev/)
 
-# deckGantt
+## How it looks
 
-Simple web interface using FrappeGantt to show Nextcloud Deck Board cards in gantt format
+![Gif illustrating the workflow of the application](NxDeckGanttDemo.gif)
 
-Thanks to :
+## How it works
 
-https://github.com/nextcloud/deck
+Tasks with set due date in the nextcloud deck are shown in the gantt chart. Tasks without a set due date are shown in the list of unscheduled tasks
 
-https://github.com/frappe/gantt
+Other information will be stored in the description of your cards in the nextcloud in the following form:
 
-## WARNING
+| Content of card description added | Gantt chart representation               | Can be set and initialized in Gantt | Has be initialized in Nextcloud | Can only be set in Nextcloud | 
+|-----------------------------------------------|------------------------------------------| --- | --- | --- |
+| **d:8:d**                                     | Duration in days                         | :white_check_mark: | :x: | :x: |
+| **p:60:p**                                    | Task/card progression in percent         | :x: | :white_check_mark: | :x: |
+| **w:15,54,12:w** | comma separated ids of card dependencies | :x: | :x: | :white_check_mark: |
 
-It's really a beta version
+## Installation
 
-Chart interactivity will add some values to your card description to set fields as duration, progression ...
+Before deploying the application to your servers you need to checkout the project and copy `private/conf.js.example` to `private/conf.js` and adapt the NC_URL variable to your needs in the form of `https://your.nextcloud.com`.
+You can either do this on the server directly or do it locally and transfer the bundled files to your server later. We  
 
-We don't guarantee the online service demo availability
+```
+git clone https://github.com/ClaraRuna/NxDeckGantt.git
+yarn install 
+# adapt nextcloud uri in configuration
+yarn build #create files in public folder 
+```
 
-## USAGE
+Now, you need to place the files located in public folder on your server & configure your Apache, for example like this if you copied the public folder to /var/www/NxDeckGantt/public
 
-Online demo version :
+```
+<VirtualHost *:80>
+    ...
+	DocumentRoot /var/www/NxDeckGantt
+</VirtualHost>
 
-![image-20200419110951335](./capture.png)
+<VirtualHost *:443>
+    ...
+	DocumentRoot /var/www/NxDeckGantt
+</VirtualHost>
 
-https://deckgantt.jblopez.fr/
+<Directory /var/www/NxDeckGantt>
+	DirectoryIndex public/App.html
+</Directory>
+```
 
-Api url : your nextcloud deck api url like https://mynexcloud.xy/index.php/apps/deck/api/v1.1/boards
+## Change logo
 
-Login : your login
-
-Password : you can create dedicated password for this app in nextcloud in profil->security
-
-## SelfHosted :
-
-Just clone and publish.
-
-## How it works :
-
-#### **To see task/card in gantt chart you must set the deck card field due date at least**
-
-For the moment deck don't have duration, progression, and dependencies card fields...
-
-So you can had tags in card description to set them :
-
-<u>Exemple :</u>
-
-**d:8:d** // --> task/card duration in day (can be set and update directly from chart )
-
-**p:60:p** // --> task/card progression in percent (must be initialize here but can be update from chart )
-
-**w:15,54,12:w** // --> comma separated ids of card dependencies ( can be set only from here for the moment )
-
-**c:bar-blue:c** // --> css class of bar in chart can be customized/extended in includes/deckGantt.css. By default 4 classes are available **bar-blue bar-red bar-green and bar-default** ( can be define only from here for the moment )
-
-Hope this useful !
+If you want to change the logo you have to replace the file public/logo.svg. If you change the name of the file, you also need to edit the name in public/App.html. You can do this independently of your bundling.

@@ -13,7 +13,7 @@ function getFontSettings(theme, fontSize, fontWeight = 400) {
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["Views/*.html"],
+  content: ["public/*.html"],
   theme: {
     extend: {
       width: {

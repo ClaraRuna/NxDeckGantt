@@ -112,7 +112,6 @@ export async function loadDeck(id) {
   }
 }
 
-
 function loadingView() {
   document.getElementById("Login").classList.add("hidden");
   document.getElementById("MainContent").classList.add("hidden");
@@ -135,7 +134,10 @@ function loggedOutView() {
 }
 
 function setErrorMessage(response) {
-  let statusText = (response.status === 401) ? "Could not log you in, are your username and password correct?" : response.statusText
+  let statusText =
+    response.status === 401
+      ? "Could not log you in, are your username and password correct?"
+      : response.statusText;
 
   document.getElementById("ErrorArea").innerHTML = statusText;
   document.getElementById("ErrorWrapper").classList.remove("hidden");

@@ -27,8 +27,7 @@ export default () => ({
     console.log(DeckSelection);
   },
   init() {
-    loadingView();
-    this.loadDecks();
+    loggedOutView();
   },
   loadDecks() {
     let credentials = getCredentials();
@@ -49,6 +48,12 @@ export default () => ({
         document.getElementById("LoadingOverlay").classList.remove("z-10");
       } else {
         loggedOutView();
+      }
+      if (response.status !== 200) {
+        setErrorMessage(
+          response,
+          "Could not log you in, are your username and password correct?"
+        );
       }
       this.currentDeck = {};
       this.currentDeck.cards = [];
@@ -86,7 +91,8 @@ export default () => ({
     return this.decks;
   },
   logIn() {
-    this.init();
+    this.hideError();
+    this.loadDecks();
   },
   hideError,
   currentDeck: {},
@@ -108,7 +114,7 @@ export async function loadDeck(id) {
   if (response.status === 200) {
     return createTasks(await response.json(), id);
   } else {
-    return new Error(`Unexpected response: ${response}`);
+    setErrorMessage(response, "Could not load Decks");
   }
 }
 
@@ -133,13 +139,12 @@ function loggedOutView() {
   document.getElementById("LoadingOverlay").classList.add("hidden");
 }
 
-function setErrorMessage(response) {
-  let statusText =
-    response.status === 401
-      ? "Could not log you in, are your username and password correct?"
-      : response.statusText;
-
-  document.getElementById("ErrorArea").innerHTML = statusText;
+export function setErrorMessage(response, customMessage = "") {
+  let errorMessage = customMessage + "<br>" + "ErrorCode: " + response.status;
+  if (response.message) {
+    errorMessage += "<br>response.message";
+  }
+  document.getElementById("ErrorArea").innerHTML = errorMessage;
   document.getElementById("ErrorWrapper").classList.remove("hidden");
 }
 

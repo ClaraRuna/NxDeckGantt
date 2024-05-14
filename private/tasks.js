@@ -1,5 +1,6 @@
 import conf from "./conf";
 import { getCredentials } from "./login";
+import { setErrorMessage } from "./decks";
 
 export function createTasks(stacks, deckId) {
   let tasks = [];
@@ -161,7 +162,7 @@ class Task {
     return !!this.end;
   }
 
-  putToRemote() {
+  async putToRemote() {
     let requestData = {
       description: this.description,
       duedate: this.end,
@@ -171,7 +172,7 @@ class Task {
       type: "plain",
     };
 
-    fetch(
+    let response = await fetch(
       conf.NC_URL +
         conf.BOARD_ENDPOINT +
         `/${this.deckId}/stacks/${this.stackId}/cards/${this.id}`,
@@ -184,5 +185,8 @@ class Task {
         body: JSON.stringify(requestData),
       }
     );
+    if (response.status != 200) {
+      setErrorMessage(response, "Could not update task");
+    }
   }
 }

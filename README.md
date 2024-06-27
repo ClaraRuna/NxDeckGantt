@@ -17,7 +17,7 @@ Also thanks to: \
 
 ## How it works
 
-Tasks with set due date in the nextcloud deck are shown in the gantt chart. Tasks without a set due date are shown in the list of unscheduled tasks
+Tasks with set due date in the nextcloud deck are shown in the gantt chart. Tasks without a set due date are shown in the list of unscheduled tasks.
 
 Other information will be stored in the description of your cards in the nextcloud in the following form:
 
@@ -27,10 +27,12 @@ Other information will be stored in the description of your cards in the nextclo
 | **p:60:p**                        | Task/card progression in percent         | :x:                                 | :white_check_mark:              | :x:                          |
 | **w:15,54,12:w**                  | comma separated ids of card dependencies | :x:                                 | :x:                             | :white_check_mark:           |
 
+It is generally recommended - and in case you are using 2FA even necessary - to generate a device password, as you will not be able to log in with your uer credentials only. The process is described here: [Nextcloud User Documentation](https://docs.nextcloud.com/server/stable/user_manual/en/session_management.html)
+
 ## Installation
 
 Before deploying the application to your servers you need to checkout the project and copy `private/conf.js.example` to `private/conf.js` and adapt the NC_URL variable to your needs in the form of `https://your.nextcloud.com`.
-You can either do this on the server directly or do it locally and transfer the bundled files to your server later. We
+You can either do this on the server directly or do it locally and transfer the bundled files to your server later.
 
 ```
 git clone https://github.com/ClaraRuna/NxDeckGantt.git

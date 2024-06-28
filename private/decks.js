@@ -38,26 +38,40 @@ export default () => ({
       headers: {
         Authorization: "Basic " + credentials,
       },
-    }).then((response) => {
-      if (response.status === 401) {
-        loggedOutView();
-      } else if (response.status === 200) {
-        this.decks = response.json();
-        loggedInView();
-        document.getElementById("LoadingOverlay").classList.remove("z-30");
-        document.getElementById("LoadingOverlay").classList.remove("z-10");
-      } else {
-        loggedOutView();
-      }
-      if (response.status !== 200) {
+    })
+      .then((response) => {
+        if (response.status === 401) {
+          loggedOutView();
+        } else if (response.status === 200) {
+          this.decks = response.json();
+          loggedInView();
+          document.getElementById("LoadingOverlay").classList.remove("z-30");
+          document.getElementById("LoadingOverlay").classList.remove("z-10");
+        } else {
+          loggedOutView();
+        }
+        if (response.status !== 200) {
+          setErrorMessage(
+            response,
+            "Could not log you in, are your username and password correct?"
+          );
+        }
+        this.currentDeck = {};
+        this.currentDeck.cards = [];
+      })
+      .catch((error) => {
         setErrorMessage(
-          response,
-          "Could not log you in, are your username and password correct?"
+          [(status) => null],
+          error +
+            "<br> This might happen when the API Endpoint of the nextcloud is not reachable. The configured endpoint is: <a class='underline' href='" +
+            conf.NC_URL +
+            conf.BOARD_ENDPOINT +
+            "'>" +
+            conf.NC_URL +
+            conf.BOARD_ENDPOINT +
+            "</a>"
         );
-      }
-      this.currentDeck = {};
-      this.currentDeck.cards = [];
-    });
+      });
   },
   openDeck(id, name) {
     loadDeck(id)

@@ -14,6 +14,7 @@ function getFontSettings(theme, fontSize, fontWeight = 400) {
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["public/*.html"],
+  safelist: ["underline"],
   theme: {
     extend: {
       width: {

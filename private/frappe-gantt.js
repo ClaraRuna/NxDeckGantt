@@ -449,6 +449,7 @@ export var Gantt = (function () {
         date_utils.diff(this.task._end, this.task._start, "hour") /
         this.gantt.options.step;
       this.width = this.gantt.options.column_width * this.duration;
+      this.color = this.task.color;
       this.progress_width =
         this.gantt.options.column_width *
           this.duration *
@@ -501,6 +502,7 @@ export var Gantt = (function () {
         rx: this.corner_radius,
         ry: this.corner_radius,
         class: "bar",
+        style: "fill:#"+this.color,
         append_to: this.bar_group,
       });
 

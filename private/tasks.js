@@ -8,6 +8,10 @@ export function createTasks(stacks, deckId) {
     console.log(stack);
     if (stack.cards) {
       for (let card of stack.cards) {
+        let color = null
+        if(card.labels.length > 0){
+          color = card.labels[0].color;
+        }
         let newTask = new Task(
           card.id,
           card.title,
@@ -16,6 +20,7 @@ export function createTasks(stacks, deckId) {
           card.order,
           card.owner.uid,
           card.duedate,
+          color,
           deckId
         );
         tasks.push(newTask);
@@ -42,7 +47,7 @@ export function filterUnscheduledTasks(tasks = []) {
 }
 
 class Task {
-  constructor(id, name, stackId, description, order, owner, dueDate, deckId) {
+  constructor(id, name, stackId, description, order, owner, dueDate, color, deckId) {
     this.id = id;
     this.name = name;
     this.stackId = stackId;
@@ -55,6 +60,7 @@ class Task {
     this.class = this.getClassFromDescription(description);
     this.progress = this.getProgressFromDescription(description);
     this.dependencies = this.getDependenciesFromDescription(description);
+    this.color = color;
     this.deckId = deckId;
   }
 
@@ -125,11 +131,6 @@ class Task {
   }
   setDurationInDescription(newDurationInDays) {
     this.setInDescription("d", newDurationInDays);
-  }
-
-  //currently unused
-  setClassInDescription(task, newClass) {
-    this.setInDescription("c", newClass);
   }
 
   setProgressInDescription(newProgress) {

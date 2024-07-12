@@ -449,6 +449,7 @@ export var Gantt = (function () {
         date_utils.diff(this.task._end, this.task._start, "hour") /
         this.gantt.options.step;
       this.width = this.gantt.options.column_width * this.duration;
+      this.color = this.task.color;
       this.progress_width =
         this.gantt.options.column_width *
           this.duration *
@@ -501,6 +502,7 @@ export var Gantt = (function () {
         rx: this.corner_radius,
         ry: this.corner_radius,
         class: "bar",
+        style: "fill:#"+this.color,
         append_to: this.bar_group,
       });
 
@@ -790,13 +792,8 @@ export var Gantt = (function () {
       const bar = this.$bar,
         label = this.group.querySelector(".bar-label");
 
-      if (label.getBBox().width > bar.getWidth()) {
-        label.classList.add("big");
-        label.setAttribute("x", bar.getX() + bar.getWidth() + 5);
-      } else {
-        label.classList.remove("big");
-        label.setAttribute("x", bar.getX() + bar.getWidth() / 2);
-      }
+      label.setAttribute("x", bar.getX() + bar.getWidth() + 5);
+
     }
 
     update_handle_position() {

@@ -18,7 +18,6 @@ export function createGantt(tasks, userLang = "en", zoomMode = "Day") {
     custom_class: "bar-red",
     language: lang,
     on_click: function (task) {
-      console.log(task);
     },
     on_date_change: function (task, start, end) {
       task.setDueDateAndDuration(start, end);
@@ -27,7 +26,6 @@ export function createGantt(tasks, userLang = "en", zoomMode = "Day") {
       task.setProgress(progress);
     },
     on_view_change: function (mode) {
-      console.log(mode);
     },
   });
   window.gantt = gantt;

@@ -19,7 +19,6 @@ export default () => ({
     let deckNav = document.getElementById("DeckNav");
     let DeckSelection = document.getElementById("DeckSelection");
     let width = deckNav.offsetWidth;
-    console.log("width:" + width);
     if (!DeckSelection.style.transform) {
       DeckSelection.style.transform = `translateX(-${width}px)`;
     } else {
@@ -31,7 +30,6 @@ export default () => ({
     let width = deckNav.offsetWidth;
     let DeckSelection = document.getElementById("DeckSelection");
     DeckSelection.style.transform = `translateX(-${width}px)`;
-    console.log(DeckSelection);
   },
   init() {
     checkBaseUri();
@@ -112,7 +110,6 @@ export default () => ({
   },
   setZoom(event){
     const selectedValue = event.target.value;
-    console.log('Selected value:', selectedValue);
     gantt.change_view_mode(selectedValue);
   },
   hideError,
@@ -154,7 +151,6 @@ function loggedInView() {
 }
 
 function loggedOutView() {
-  console.log("render logged out view");
   document.getElementById("DeckSelection").classList.add("hidden");
   document.getElementById("Login").classList.remove("hidden");
   document.getElementById("LoadingOverlay").classList.add("hidden");

@@ -1060,8 +1060,6 @@ export var Gantt = (function () {
     setup_tasks(tasks) {
       // prepare tasks
       this.tasks = tasks.map((task, i) => {
-        /*console.log("setup tasks");
-        console.log(task)*/
         // convert to Date objects
         task._start = date_utils.parse(task.start);
         task._end = date_utils.parse(task.end);

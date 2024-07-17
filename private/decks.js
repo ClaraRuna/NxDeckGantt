@@ -198,6 +198,6 @@ function setZoomSelectOptions(lang){
     zoomSelect.appendChild(optionElement);
   });
 
-  zoomOptions.value = defaultZoomMode;
+  zoomSelect.value = defaultZoomMode;
 
 }

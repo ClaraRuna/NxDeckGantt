@@ -110,8 +110,10 @@ export default () => ({
     this.hideError();
     this.loadDecks();
   },
-  setZoom(){
-    console.log("todo: setZoom");
+  setZoom(event){
+    const selectedValue = event.target.value;
+    console.log('Selected value:', selectedValue);
+    gantt.change_view_mode(selectedValue);
   },
   hideError,
   currentDeck: {},

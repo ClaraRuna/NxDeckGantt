@@ -82,7 +82,9 @@ export default () => ({
         this.currentDeck.id = id;
         let scheduledTasks = this.getScheduledTasks();
         if (scheduledTasks.length > 0) {
-          createGantt(this.getScheduledTasks(), this.userLang, defaultZoomMode);
+          let zoomMode = getZoomLevelFromCookie(name) || "Day";
+          createGantt(this.getScheduledTasks(), this.userLang, zoomMode);
+          document.getElementById("ZoomSelect").value = zoomMode;
         }
       })
       .finally(() => {
@@ -111,6 +113,7 @@ export default () => ({
   setZoom(event){
     const selectedValue = event.target.value;
     gantt.change_view_mode(selectedValue);
+    document.cookie = "Deck." + this.currentDeck.name + ".zoom=" + selectedValue;
   },
   hideError,
   currentDeck: {},
@@ -199,5 +202,19 @@ function setZoomSelectOptions(lang){
   });
 
   zoomSelect.value = defaultZoomMode;
+}
 
+
+function getZoomLevelFromCookie(deckName) {
+  const cookieName = "Deck." + deckName + ".zoom";
+  const cookies = document.cookie.split(';');
+
+  for (let i = 0; i < cookies.length; i++) {
+    let cookie = cookies[i].trim();
+
+    if (cookie.startsWith(cookieName + '=')) {
+      return cookie.substring(cookieName.length + 1);
+    }
+  }
+  return null;
 }

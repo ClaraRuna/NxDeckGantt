@@ -183,7 +183,7 @@ function checkBaseUri() {
   }).catch(() => {
     setErrorMessage(
       [(status) => null],
-      translate("wrongUri", navigator.language || navigator.userLanguage),
+      translate("wrongUri", navigator.language || navigator.userLanguage) +
       conf.NC_URL
     );
   });

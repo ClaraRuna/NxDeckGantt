@@ -1,8 +1,7 @@
 import { Gantt } from "./frappe-gantt";
 
-export function createGantt(tasks, userLang = "en") {
+export function createGantt(tasks, userLang = "en", zoomMode = "Day") {
   let lang = userLang.slice(0, 2);
-  console.log(lang);
 
   var gantt = new Gantt("#GanttChart", tasks, {
     header_height: 50,
@@ -13,22 +12,19 @@ export function createGantt(tasks, userLang = "en") {
     bar_corner_radius: 3,
     arrow_curve: 5,
     padding: 18,
-    view_mode: "Day",
+    view_mode: zoomMode,
     date_format: "YYYY-MM-DD",
     custom_popup_html: null,
     custom_class: "bar-red",
     language: lang,
-    on_click: function (task) {
-      console.log(task);
-    },
+    on_click: function (task) {},
     on_date_change: function (task, start, end) {
       task.setDueDateAndDuration(start, end);
     },
     on_progress_change: function (task, progress) {
       task.setProgress(progress);
     },
-    on_view_change: function (mode) {
-      console.log(mode);
-    },
+    on_view_change: function (mode) {},
   });
+  window.gantt = gantt;
 }

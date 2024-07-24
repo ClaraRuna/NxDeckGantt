@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <title>App</title>
+  <title>NxDeckGantt</title>
   <link rel="stylesheet" href="../public/Styles/main.css" />
   <script defer src="../public/Scripts/main.js"></script>
 
@@ -26,9 +26,7 @@
       class="absolute top-0 flex hidden h-full w-full items-center justify-center"
     >
       <div class="rounded-lg border p-10 shadow">
-        <p class="pb-10">
-          Please log in to give this app access to your Nextcloud Account.
-        </p>
+        <p class="pb-10" id="LoginText"></p>
         <form @submit.prevent="logIn">
           <label for="username" class="sr-only">Username</label>
           <input
@@ -104,6 +102,13 @@
         <h1 class="bg-gray-50 text-center" x-text="getCurrentDeckName"></h1>
         <div x-show="getScheduledTasks().length>0">
           <h2 class="my-5 w-full bg-gray-50 text-center">Gantt chart</h2>
+          <div class="mb-2 flex w-full justify-end">
+            <select
+              class="rounded border border-gray-300 px-4 py-2"
+              @change="setZoom"
+              id="ZoomSelect"
+            ></select>
+          </div>
           <div id="GanttChart" class="relative z-0"></div>
         </div>
         <div class="" x-show="getUnscheduledTasks().length>0">

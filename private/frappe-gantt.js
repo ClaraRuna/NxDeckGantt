@@ -502,7 +502,7 @@ export var Gantt = (function () {
         rx: this.corner_radius,
         ry: this.corner_radius,
         class: "bar",
-        style: "fill:#"+this.color,
+        style: "fill:#" + this.color,
         append_to: this.bar_group,
       });
 
@@ -793,7 +793,6 @@ export var Gantt = (function () {
         label = this.group.querySelector(".bar-label");
 
       label.setAttribute("x", bar.getX() + bar.getWidth() + 5);
-
     }
 
     update_handle_position() {
@@ -1060,8 +1059,6 @@ export var Gantt = (function () {
     setup_tasks(tasks) {
       // prepare tasks
       this.tasks = tasks.map((task, i) => {
-        /*console.log("setup tasks");
-        console.log(task)*/
         // convert to Date objects
         task._start = date_utils.parse(task.start);
         task._end = date_utils.parse(task.end);

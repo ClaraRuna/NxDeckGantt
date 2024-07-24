@@ -5,11 +5,10 @@ import { setErrorMessage } from "./decks";
 export function createTasks(stacks, deckId) {
   let tasks = [];
   for (let stack of stacks) {
-    console.log(stack);
     if (stack.cards) {
       for (let card of stack.cards) {
-        let color = null
-        if(card.labels.length > 0){
+        let color = null;
+        if (card.labels.length > 0) {
           color = card.labels[0].color;
         }
         let newTask = new Task(
@@ -47,7 +46,17 @@ export function filterUnscheduledTasks(tasks = []) {
 }
 
 class Task {
-  constructor(id, name, stackId, description, order, owner, dueDate, color, deckId) {
+  constructor(
+    id,
+    name,
+    stackId,
+    description,
+    order,
+    owner,
+    dueDate,
+    color,
+    deckId
+  ) {
     this.id = id;
     this.name = name;
     this.stackId = stackId;
@@ -125,8 +134,6 @@ class Task {
     let duration = Math.round((end - start) / msPerDay);
     this.setDurationInDescription(duration);
     this.end = this.calculateEnd(end);
-    console.log(this.end);
-    console.log(duration);
     this.putToRemote();
   }
   setDurationInDescription(newDurationInDays) {
@@ -146,7 +153,6 @@ class Task {
     this.setInDescription("w", newDependency);
   }
   setInDescription(letter, value) {
-    console.log("old description: " + this.description);
     let regex = new RegExp(letter + ":(.*?):" + letter);
     let newExp = `${letter}:${value}:${letter}`;
     let description = this.description;
@@ -155,7 +161,6 @@ class Task {
     } else {
       description = description + newExp + "\n";
     }
-    console.log("new description: " + description);
     this.description = description;
   }
 

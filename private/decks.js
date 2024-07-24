@@ -6,11 +6,12 @@ import {
 } from "./tasks";
 import { createGantt } from "./gantt";
 import { getCredentials } from "./login";
+import { translate } from "./translations";
 
 const zoomOptionTranslations = {
-  en:  ["Quarter Day", "Half Day", "Day", "Week", "Month", "Year"],
-  de:  ["Viertel Tag", "Halber Tag", "Tag", "Woche", "Monat", "Jahr"]
-}
+  en: ["Quarter Day", "Half Day", "Day", "Week", "Month", "Year"],
+  de: ["Viertel Tag", "Halber Tag", "Tag", "Woche", "Monat", "Jahr"],
+};
 
 const defaultZoomMode = "Day";
 
@@ -60,7 +61,7 @@ export default () => ({
         if (response.status !== 200) {
           setErrorMessage(
             response,
-            "Could not log you in, are your username and password correct?"
+              translate("wrongPassword", this.userLang)
           );
         }
         this.currentDeck = {};
@@ -69,7 +70,7 @@ export default () => ({
       .catch((error) => {
         setErrorMessage(
           error,
-          "Could not log you in, are your username and password correct?"
+            translate("wrongPassword", this.userLang)
         );
       });
   },
@@ -110,10 +111,11 @@ export default () => ({
     this.hideError();
     this.loadDecks();
   },
-  setZoom(event){
+  setZoom(event) {
     const selectedValue = event.target.value;
     gantt.change_view_mode(selectedValue);
-    document.cookie = "Deck." + this.currentDeck.name + ".zoom=" + selectedValue;
+    document.cookie =
+      "Deck." + this.currentDeck.name + ".zoom=" + selectedValue;
   },
   hideError,
   currentDeck: {},
@@ -157,6 +159,7 @@ function loggedOutView() {
   document.getElementById("DeckSelection").classList.add("hidden");
   document.getElementById("Login").classList.remove("hidden");
   document.getElementById("LoadingOverlay").classList.add("hidden");
+  document.getElementById("LoginText").innerText = translate("loginText", navigator.language || navigator.userLanguage);
 }
 
 export function setErrorMessage(response, customMessage = "") {
@@ -183,19 +186,20 @@ function checkBaseUri() {
   }).catch(() => {
     setErrorMessage(
       [(status) => null],
-      "Cannot connect to nextcloud server. Please check configured URI: " +
+        translate("wrongUri", navigator.language || navigator.userLanguage),
         conf.NC_URL
     );
   });
 }
 
-function setZoomSelectOptions(lang){
-  let zoomOptions = zoomOptionTranslations[lang] || zoomOptionTranslations ["en"];
+function setZoomSelectOptions(lang) {
+  let zoomOptions =
+    zoomOptionTranslations[lang] || zoomOptionTranslations["en"];
 
   let zoomSelect = document.getElementById("ZoomSelect");
 
   zoomOptions.map((value, index) => {
-    const optionElement = document.createElement('option');
+    const optionElement = document.createElement("option");
     optionElement.value = zoomOptionTranslations["en"][index];
     optionElement.textContent = value;
     zoomSelect.appendChild(optionElement);
@@ -204,15 +208,14 @@ function setZoomSelectOptions(lang){
   zoomSelect.value = defaultZoomMode;
 }
 
-
 function getZoomLevelFromCookie(deckName) {
   const cookieName = "Deck." + deckName + ".zoom";
-  const cookies = document.cookie.split(';');
+  const cookies = document.cookie.split(";");
 
   for (let i = 0; i < cookies.length; i++) {
     let cookie = cookies[i].trim();
 
-    if (cookie.startsWith(cookieName + '=')) {
+    if (cookie.startsWith(cookieName + "=")) {
       return cookie.substring(cookieName.length + 1);
     }
   }

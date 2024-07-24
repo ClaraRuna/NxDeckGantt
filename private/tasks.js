@@ -1,6 +1,9 @@
 import conf from "./conf";
 import { getCredentials } from "./login";
 import { setErrorMessage } from "./decks";
+import { translate } from "./translations";
+
+const ganttInfoDelimiter = "#######"
 
 export function createTasks(stacks, deckId) {
   let tasks = [];
@@ -156,12 +159,17 @@ class Task {
     let regex = new RegExp(letter + ":(.*?):" + letter);
     let newExp = `${letter}:${value}:${letter}`;
     let description = this.description;
-    if (description.search(regex) !== -1) {
-      description = description.replace(regex, newExp);
-    } else {
-      description = description + newExp + "\n";
+    let ganttInfosStartIndex = description.match(ganttInfoDelimiter) ? description.match(ganttInfoDelimiter).index : description.length ;
+    let ganttInfos = description.substring(ganttInfosStartIndex);
+    if (! ganttInfos.startsWith(ganttInfoDelimiter)){
+      ganttInfos = (' \n \n \n \n \n \n \n \n \n ' + ganttInfoDelimiter + " " + translate('doNotEdit', navigator.language || navigator.userLanguage)) + " " + ganttInfoDelimiter + "\n"  + ganttInfos;
     }
-    this.description = description;
+    if (ganttInfos.search(regex) !== -1) {
+        ganttInfos = ganttInfos.replace(regex, newExp);
+    } else {
+        ganttInfos = ganttInfos + newExp + "\n";
+    }
+    this.description = description.substring(0, ganttInfosStartIndex) + ganttInfos;
   }
 
   isScheduled() {

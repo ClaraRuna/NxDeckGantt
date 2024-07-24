@@ -7,6 +7,8 @@ export function translate(key, lang) {
         "Cannot connect to nextcloud server. Please check configured URI: ",
       loginText:
         "Please log in to give this app access to your Nextcloud Account.",
+      doNotEdit:
+        "Please do not edit below this line",
     },
     de: {
       wrongPassword:
@@ -15,13 +17,15 @@ export function translate(key, lang) {
         "Verbindung mit dem Nextcloud Server nicht möglich. Bitte die konfigurierte URI prüfen: ",
       loginText:
         "Bitte einloggen, um Zugang zum Nextcloud Account zu ermöglichen.",
+      doNotEdit:
+        "Unter dieser Zeile bitte nicht bearbeiten",
     },
   };
 
     if (!(lang in translations)){
       lang = "en";
   }
-  if (!key in translations[lang]){
+  if (!(key in translations[lang])){
       return "translation error";
   }
   return translations[lang][key];

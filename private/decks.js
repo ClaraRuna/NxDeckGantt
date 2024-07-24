@@ -59,19 +59,13 @@ export default () => ({
           loggedOutView();
         }
         if (response.status !== 200) {
-          setErrorMessage(
-            response,
-              translate("wrongPassword", this.userLang)
-          );
+          setErrorMessage(response, translate("wrongPassword", this.userLang));
         }
         this.currentDeck = {};
         this.currentDeck.cards = [];
       })
       .catch((error) => {
-        setErrorMessage(
-          error,
-            translate("wrongPassword", this.userLang)
-        );
+        setErrorMessage(error, translate("wrongPassword", this.userLang));
       });
   },
   openDeck(id, name) {
@@ -159,7 +153,10 @@ function loggedOutView() {
   document.getElementById("DeckSelection").classList.add("hidden");
   document.getElementById("Login").classList.remove("hidden");
   document.getElementById("LoadingOverlay").classList.add("hidden");
-  document.getElementById("LoginText").innerText = translate("loginText", navigator.language || navigator.userLanguage);
+  document.getElementById("LoginText").innerText = translate(
+    "loginText",
+    navigator.language || navigator.userLanguage
+  );
 }
 
 export function setErrorMessage(response, customMessage = "") {
@@ -186,8 +183,8 @@ function checkBaseUri() {
   }).catch(() => {
     setErrorMessage(
       [(status) => null],
-        translate("wrongUri", navigator.language || navigator.userLanguage),
-        conf.NC_URL
+      translate("wrongUri", navigator.language || navigator.userLanguage),
+      conf.NC_URL
     );
   });
 }
@@ -195,7 +192,6 @@ function checkBaseUri() {
 function setZoomSelectOptions(lang) {
   let zoomOptions =
     zoomOptionTranslations[lang] || zoomOptionTranslations["en"];
-
   let zoomSelect = document.getElementById("ZoomSelect");
 
   zoomOptions.map((value, index) => {

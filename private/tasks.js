@@ -7,8 +7,8 @@ export function createTasks(stacks, deckId) {
   for (let stack of stacks) {
     if (stack.cards) {
       for (let card of stack.cards) {
-        let color = null
-        if(card.labels.length > 0){
+        let color = null;
+        if (card.labels.length > 0) {
           color = card.labels[0].color;
         }
         let newTask = new Task(
@@ -46,7 +46,17 @@ export function filterUnscheduledTasks(tasks = []) {
 }
 
 class Task {
-  constructor(id, name, stackId, description, order, owner, dueDate, color, deckId) {
+  constructor(
+    id,
+    name,
+    stackId,
+    description,
+    order,
+    owner,
+    dueDate,
+    color,
+    deckId
+  ) {
     this.id = id;
     this.name = name;
     this.stackId = stackId;

@@ -31,6 +31,10 @@ It is generally recommended - and in case you are using 2FA even necessary - to 
 
 ## Installation
 
+If you do not want to edit any styling, you can just copy the public folder and edit the NC_URL variable in the bundled file Scripts/main.js line 3176.
+
+## Bundling
+
 Before deploying the application to your servers you need to checkout the project and copy `private/conf.js.example` to `private/conf.js` and adapt the NC_URL variable to your needs in the form of `https://your.nextcloud.com`.
 You can either do this on the server directly or do it locally and transfer the bundled files to your server later.
 
@@ -41,7 +45,9 @@ yarn install
 yarn build #create files in public folder
 ```
 
-Now, you need to place the files located in public folder on your server & configure your Apache, for example like this if you copied the public folder to /var/www/NxDeckGantt/public
+Now, you need to place the files located in public folder on your server & configure your Server. 
+
+If you are using Apache and for example copied the public folder to /var/www/NxDeckGantt/public it looks like this:
 
 ```
 <VirtualHost *:80>

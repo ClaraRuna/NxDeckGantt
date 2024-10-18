@@ -1,3 +1,6 @@
+> [!IMPORTANT]  
+> The project was moved to https://gitlab.opencode.de/wuerzburg/deck2gantt
+
 # Nextcloud Deck Gantt
 
 Simple web interface using FrappeGantt to show and edit Nextcloud Deck Board cards in gantt format
